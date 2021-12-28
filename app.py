@@ -20,23 +20,19 @@ def index():
     return render_template('index.html')
 
 @app.route('/submit', methods=['POST'])
-def submit():
-    username= request.form['username']
-    student=Student(username)
+def submit(id):
+
+    student=Student(id)
     db.session.add(student)
     db.session.commit()
 
-    return render_template('success.html', data=username)
+
 
 @app.route('/delete', methods=['POST'])
-def delete():
-    username1= request.form['username1']
-    #student=Student(username)
-    #db.session.(student)
-    Student.query.filter_by(username=username1).delete()
-    db.session.commit()
+def delete(id):
 
-    return render_template('success.html', data=username1)
+    Student.query.filter_by(username=id).delete()
+    db.session.commit()
 
 
 
