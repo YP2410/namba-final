@@ -28,6 +28,16 @@ def submit():
 
     return render_template('success.html', data=username)
 
+@app.route('/delete', methods=['POST'])
+def delete():
+    username1= request.form['username1']
+    #student=Student(username)
+    #db.session.(student)
+    Student.query.filter_by(username=username1).delete()
+    db.session.commit()
+
+    return render_template('success.html', data=username1)
+
 
 
 if __name__ == '__main__':  #python interpreter assigns "__main__" to the file you run
