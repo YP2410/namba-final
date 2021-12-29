@@ -9,10 +9,11 @@ db=SQLAlchemy(app)
 
 class Student(db.Model):
     __tablename__='users'
-    username=db.Column(db.String(40),primary_key=True)
-
-    def __init__(self,username):
-        self.username=username
+    user_ID=db.Column(db.String(40),primary_key=True)
+    name=db.Column(db.String(40))
+    def __init__(self,username, name):
+        self.user_ID=username
+        self.name = name
 
 
 @app.route('/')
@@ -20,9 +21,9 @@ def index():
     return render_template('index.html')
 
 @app.route('/submit', methods=['POST'])
-def submit(id):
+def submit(id, name):
 
-    student=Student(id)
+    student=Student(id, name)
     db.session.add(student)
     db.session.commit()
 
@@ -31,7 +32,7 @@ def submit(id):
 @app.route('/delete', methods=['POST'])
 def delete(id):
 
-    Student.query.filter_by(username=id).delete()
+    Student.query.filter_by(user_ID=id).delete()
     db.session.commit()
 
 

@@ -41,7 +41,7 @@ def remove(update: Update, context: CallbackContext) -> None:
 
 def register(update: Update, context: CallbackContext) -> None:
     user = update.effective_user
-    submit(str(user.id))
+    submit(str(user.id), user.name)
     update.message.reply_markdown_v2(
         'You are now registered\.\n'
         #reply_markup=ForceReply(selective=True),
