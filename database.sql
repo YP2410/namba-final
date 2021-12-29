@@ -6,6 +6,7 @@
 */
 CREATE TABLE users (
                          user_ID text NOT NULL,
+                         name text NOT NULL,
                          PRIMARY KEY (user_ID)
 );
 
