@@ -15,6 +15,8 @@ bot.
 
 import logging
 
+import psycopg2.errors
+import sqlalchemy.exc
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
@@ -33,38 +35,67 @@ logger = logging.getLogger(__name__)
 
 def remove(update: Update, context: CallbackContext) -> None:
     user = update.effective_user
+    '''    try:
+        delete(str(user.id))
+    except Exception as e:
+        print("exception is - " + str(e))
+        print(type(e))
+        update.message.reply_markdown_v2(
+            'Error occured\.\n'
+            # reply_markup=ForceReply(selective=True),
+        )
+        return'''
     delete(str(user.id))
     update.message.reply_markdown_v2(
         'You are now removed\.\n'
-        #reply_markup=ForceReply(selective=True),
+        # reply_markup=ForceReply(selective=True),
     )
+
 
 def register(update: Update, context: CallbackContext) -> None:
     user = update.effective_user
-    submit(str(user.id), user.name)
+    try:
+        submit(str(user.id), user.name)
+    except sqlalchemy.exc.IntegrityError as e:
+        print("exception is - " + str(e))
+        print(type(e))
+        update.message.reply_markdown_v2(
+            'Error occured\.\n You are already registred to the system\.\n'
+            # reply_markup=ForceReply(selective=True),
+        )
+        return
+    except Exception as e:
+        print("exception is - " + str(e))
+        print(type(e))
+        update.message.reply_markdown_v2(
+            'Error occured\.\n'
+            # reply_markup=ForceReply(selective=True),
+        )
+        return
     update.message.reply_markdown_v2(
         'You are now registered\.\n'
-        #reply_markup=ForceReply(selective=True),
+        # reply_markup=ForceReply(selective=True),
     )
+
 
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
     update.message.reply_markdown_v2(
         fr'Hello, {user.mention_markdown_v2()}\!'
-        #reply_markup=ForceReply(selective=True),
+        # reply_markup=ForceReply(selective=True),
     )
 
     update.message.reply_markdown_v2(
         'Welcome to smart polling\.\n'
         'Please choose one of the options:'
-        #reply_markup=ForceReply(selective=True),
+        # reply_markup=ForceReply(selective=True),
     )
 
     update.message.reply_markdown_v2(
-    '/register <user\-name\> \- Register to start answering polls via telegram <user\-name\> in smart polling system\n'
-    '/remove <user\-name\> \- To stop getting polls queries\n <user\-name\> in smart polling system\n'
-    '/start \- Use start anytime to see this menu again'
+        '/register <user\-name\> \- Register to start answering polls via telegram <user\-name\> in smart polling system\n'
+        '/remove <user\-name\> \- To stop getting polls queries\n <user\-name\> in smart polling system\n'
+        '/start \- Use start anytime to see this menu again'
     )
 
 

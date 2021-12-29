@@ -23,18 +23,24 @@ def index():
 @app.route('/submit', methods=['POST'])
 def submit(id, name):
 
-    student=Student(id, name)
-    db.session.add(student)
-    db.session.commit()
+    try:
+        student=Student(id, name)
+        db.session.add(student)
+        db.session.commit()
+    except Exception as e:
+        db.session.remove()
+        raise e
 
 
 
 @app.route('/delete', methods=['POST'])
 def delete(id):
-
-    Student.query.filter_by(user_ID=id).delete()
-    db.session.commit()
-
+    try:
+        Student.query.filter_by(user_ID=id).delete()
+        db.session.commit()
+    except Exception as e:
+        db.session.remove()
+        raise e
 
 
 if __name__ == '__main__':  #python interpreter assigns "__main__" to the file you run
