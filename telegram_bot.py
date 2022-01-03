@@ -93,8 +93,8 @@ def start(update: Update, context: CallbackContext) -> None:
     )
 
     update.message.reply_markdown_v2(
-        '/register <user\-name\> \- Register to start answering polls via telegram <user\-name\> in smart polling system\n'
-        '/remove <user\-name\> \- To stop getting polls queries\n <user\-name\> in smart polling system\n'
+        '/register \- Register to start answering polls via telegram in smart polling system\n'
+        '/remove \- To stop getting polls queries\n in smart polling system\n'
         '/start \- Use start anytime to see this menu again'
     )
 
