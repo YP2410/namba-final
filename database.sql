@@ -15,7 +15,7 @@ CREATE TABLE users (
 */
 CREATE TABLE admins (
                        Username text NOT NULL,
-                       Password int NOT NULL,
+                       Password text NOT NULL,
                        PRIMARY KEY (Username)
 );
 

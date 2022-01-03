@@ -21,7 +21,7 @@ from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
 # Enable logging
-from app import submit, delete
+from app import submit, delete, add_poll, add_admin, delete_admin, delete_poll
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
@@ -56,6 +56,9 @@ def register(update: Update, context: CallbackContext) -> None:
     user = update.effective_user
     try:
         submit(str(user.id), user.name)
+        #add_poll("Is Daniel Balool", ["yes", "no", "obviously"], [0,0,0], 0, 0, 0, [0], "yes" )
+        #delete_admin("yaron")
+        #delete_poll("1")
     except sqlalchemy.exc.IntegrityError as e:
         print("exception is - " + str(e))
         print(type(e))

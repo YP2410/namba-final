@@ -16,10 +16,18 @@ class Student(db.Model):
         self.user_ID=username
         self.name = name
 
+class Poll_ID(db.Model):
+    __tablename__='poll_id'
+    poll_ID=db.Column(db.Integer,primary_key=True)
+
+    def __init__(self):
+        self.poll_ID = 0
+
+
 class Admins(db.Model):
     __tablename__='admins'
     Username=db.Column(db.String(40),primary_key=True)
-    Password=db.Column(db.Integer)
+    Password=db.Column(db.String(40))
     def __init__(self,username, password):
         self.Username = username
         self.Password = password
@@ -67,6 +75,18 @@ class Polls_answers(db.Model):
 def index():
     return render_template('index.html')
 
+@app.route('/init_pollID', methods=['POST'])
+def init_pollID():
+
+    try:
+        poll_id=Poll_ID()
+        db.session.add(poll_id)
+        db.session.commit()
+    except Exception as e:
+        db.session.remove()
+        raise e
+
+
 @app.route('/submit', methods=['POST'])
 def submit(id, name):
 
@@ -78,8 +98,6 @@ def submit(id, name):
         db.session.remove()
         raise e
 
-
-
 @app.route('/delete', methods=['POST'])
 def delete(id):
     try:
@@ -88,6 +106,56 @@ def delete(id):
     except Exception as e:
         db.session.remove()
         raise e
+
+
+@app.route('/add_admin', methods=['POST'])
+def add_admin(username, password):
+
+    try:
+        admin = Admins(username, password)
+        db.session.add(admin)
+        db.session.commit()
+    except Exception as e:
+        db.session.remove()
+        raise e
+
+
+@app.route('/delete_admin', methods=['POST'])
+def delete_admin(username):
+    try:
+        Admins.query.filter_by(Username=username).delete()
+        db.session.commit()
+    except Exception as e:
+        db.session.remove()
+        raise e
+
+@app.route('/add_poll', methods=['GET', 'POST'])
+def add_poll(question, answers, answers_counter, closed, multiple_choice,
+             quiz, correct_answers, solution):
+    Result=db.session.query(Poll_ID).all()
+    poll_id = Result[0].poll_ID
+
+    try:
+        poll = Polls(poll_id, question, answers, answers_counter, closed, multiple_choice,
+                     quiz, correct_answers, solution)
+        db.session.add(poll)
+        db.session.commit()
+    except Exception as e:
+        db.session.remove()
+        raise e
+
+    Result[0].poll_ID += 1
+    db.session.commit()
+
+@app.route('/delete_poll', methods=['POST'])
+def delete_poll(poll_id):
+    try:
+        Polls.query.filter_by(poll_ID=poll_id).delete()
+        db.session.commit()
+    except Exception as e:
+        db.session.remove()
+        raise e
+
 
 
 if __name__ == '__main__':  #python interpreter assigns "__main__" to the file you run
