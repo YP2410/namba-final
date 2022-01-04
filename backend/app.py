@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, send_from_directory, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from flask_cors import CORS, cross_origin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 CORS(app)
@@ -28,7 +29,7 @@ class Poll_ID(db.Model):
 class Admins(db.Model):
     __tablename__='admins'
     Username=db.Column(db.String(40),primary_key=True)
-    Password=db.Column(db.String(40))
+    Password=db.Column(db.String(150))
     def __init__(self,username, password):
         self.Username = username
         self.Password = password
@@ -61,7 +62,7 @@ class Polls(db.Model):
 class Polls_answers(db.Model):
     __tablename__='polls_answers'
     poll_ID=db.Column(db.String(40), ForeignKey(Polls.poll_ID) ,primary_key=True)
-    user_ID=db.Column(db.String(40), ForeignKey(Student.user_ID) ,primary_key=True)
+    user_ID=db.Column(db.String(150), ForeignKey(Student.user_ID) ,primary_key=True)
     answers = db.Column(db.ARRAY(db.String(100)))
     is_correct = db.Column(db.BOOLEAN)
 
@@ -80,7 +81,7 @@ def index():
 
 @app.route('/mes', methods=['GET'])
 def message():
-    print("got to flask")
+    #print("got to flask")
     # return render_template("index.html")
     # return send_from_directory(app.static_folder, 'build/index.html')
     return {'message': '1234'}
@@ -118,16 +119,18 @@ def delete(id):
         raise e
 
 
-@app.route('/add_admin', methods=['POST'])
+@app.route('/add_admin/<username>/<password>', methods=['POST'])
 def add_admin(username, password):
 
     try:
-        admin = Admins(username, password)
+        hashed_password = generate_password_hash(password)
+        admin = Admins(username, hashed_password)
         db.session.add(admin)
         db.session.commit()
     except Exception as e:
         db.session.remove()
         raise e
+    return {"result": "wow"}
 
 
 @app.route('/delete_admin', methods=['POST'])
@@ -166,7 +169,25 @@ def delete_poll(poll_id):
         db.session.remove()
         raise e
 
+'''@app.route('/auth_admin', methods=['GET', 'POST'])
+def auth_admin(username, incoming_password):
+    Result=db.session.query(Admins).filter(Admins.Username == username)
+    hashed_password = Result[0].Password
+    return {"result": check_password_hash(hashed_password, incoming_password)}'''
 
+@app.route('/auth_admin/<username>/<password>', methods=['GET', 'POST'])
+def auth_admin(username, password):
+    try:
+        Result=db.session.query(Admins).filter(Admins.Username == username)
+        hashed_password = Result[0].Password
+    except Exception as e:
+        print("Exception is " + str(e))
+        return {"result": "Username and/or password is not correct"}
+    return {"result": check_password_hash(hashed_password, password)}
+
+@app.route('/generate_hash')
+def generate_hash(incoming_password):
+    return generate_password_hash(incoming_password)
 
 if __name__ == '__main__':  #python interpreter assigns "__main__" to the file you run
     app.run(debug=True)
