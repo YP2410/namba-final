@@ -4,7 +4,6 @@
     <list default="true" id="454ce11f-7401-48b3-b881-14c43c598272" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/telegram_bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/telegram_bot.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -188,7 +187,8 @@
       <workItem from="1640689601448" duration="545000" />
       <workItem from="1640690166557" duration="781000" />
       <workItem from="1640690972234" duration="14094000" />
-      <workItem from="1641195433220" duration="8618000" />
+      <workItem from="1641195433220" duration="9090000" />
+      <workItem from="1641324051996" duration="1169000" />
     </task>
     <task id="LOCAL-00001" summary="flask is integrated with postgresql">
       <created>1640695155934</created>
@@ -225,7 +225,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641198630447</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="added methods for adding and deleting admins and polls, and changes admin's password to be string">
+      <created>1641204250301</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1641204250301</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -278,13 +285,14 @@
     <MESSAGE value="sql code (without table/s for polls)" />
     <MESSAGE value="sql is fun!! Arad is stupid" />
     <MESSAGE value="all of the tables creation and minor change in text to user" />
-    <option name="LAST_COMMIT_MESSAGE" value="all of the tables creation and minor change in text to user" />
+    <MESSAGE value="added methods for adding and deleting admins and polls, and changes admin's password to be string" />
+    <option name="LAST_COMMIT_MESSAGE" value="added methods for adding and deleting admins and polls, and changes admin's password to be string" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Final_Project$app.coverage" NAME="app Coverage Results" MODIFIED="1640790330902" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/namba_final_project$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1641204132834" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/namba_final_project$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1641324979369" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Final_Project$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1640790342366" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/namba_final_project$app.coverage" NAME="app Coverage Results" MODIFIED="1641203824877" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/namba_final_project$app.coverage" NAME="app Coverage Results" MODIFIED="1641324968583" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/App.js">

@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 app = Flask(__name__)
 
@@ -27,7 +29,7 @@ class Poll_ID(db.Model):
 class Admins(db.Model):
     __tablename__='admins'
     Username=db.Column(db.String(40),primary_key=True)
-    Password=db.Column(db.String(40))
+    Password=db.Column(db.String(150))
     def __init__(self,username, password):
         self.Username = username
         self.Password = password
@@ -112,7 +114,8 @@ def delete(id):
 def add_admin(username, password):
 
     try:
-        admin = Admins(username, password)
+        hashed_password = generate_password_hash(password)
+        admin = Admins(username, hashed_password)
         db.session.add(admin)
         db.session.commit()
     except Exception as e:
@@ -155,6 +158,17 @@ def delete_poll(poll_id):
     except Exception as e:
         db.session.remove()
         raise e
+
+@app.route('/auth_admin')
+def auth_admin(username, incoming_password):
+    Result=db.session.query(Admins).filter(Admins.Username == username)
+    hashed_password = Result[0].Password
+    return check_password_hash(hashed_password, incoming_password)
+
+@app.route('/generate_hash')
+def generate_hash(incoming_password):
+    return generate_password_hash(incoming_password)
+
 
 
 
