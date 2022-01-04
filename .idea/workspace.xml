@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="454ce11f-7401-48b3-b881-14c43c598272" name="Default Changelist" comment="">
+    <list default="true" id="454ce11f-7401-48b3-b881-14c43c598272" name="Default Changelist" comment="updated sql_database">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/namba-final-project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/namba-final-project.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telegram_bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/telegram_bot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/telegram_bot.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/success.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,6 +102,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/Change SQL Dialect" value="PostgreSQL" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/backend/app.py" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -106,7 +116,12 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.telegram_bot">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\technion\semester_7\Namba\Final_Project\templates" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.app">
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
@@ -118,12 +133,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backend/app.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -164,10 +179,16 @@
       <envs />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="JavaScript Debug.Debug Application" />
+      <item itemvalue="npm.npm start" />
+      <item itemvalue="Python.app" />
+      <item itemvalue="Python.telegram_bot" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.telegram_bot" />
         <item itemvalue="Python.app" />
+        <item itemvalue="Python.telegram_bot" />
       </list>
     </recent_temporary>
   </component>
@@ -187,8 +208,9 @@
       <workItem from="1640689601448" duration="545000" />
       <workItem from="1640690166557" duration="781000" />
       <workItem from="1640690972234" duration="14094000" />
-      <workItem from="1641195433220" duration="9090000" />
-      <workItem from="1641324051996" duration="1169000" />
+      <workItem from="1641195504252" duration="9689000" />
+      <workItem from="1641242352466" duration="6395000" />
+      <workItem from="1641324260798" duration="1857000" />
     </task>
     <task id="LOCAL-00001" summary="flask is integrated with postgresql">
       <created>1640695155934</created>
@@ -218,19 +240,19 @@
       <option name="project" value="LOCAL" />
       <updated>1640798325115</updated>
     </task>
-    <task id="LOCAL-00005" summary="all of the tables creation and minor change in text to user">
-      <created>1641198630447</created>
+    <task id="LOCAL-00005" summary="handling multiple register error&#10;there is no need for multiple delete handling (there is no error there...)">
+      <created>1640801827979</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1641198630447</updated>
+      <updated>1640801827979</updated>
     </task>
-    <task id="LOCAL-00006" summary="added methods for adding and deleting admins and polls, and changes admin's password to be string">
-      <created>1641204250301</created>
+    <task id="LOCAL-00006" summary="updated sql_database">
+      <created>1641242853650</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1641204250301</updated>
+      <updated>1641242853650</updated>
     </task>
     <option name="localTasksCounter" value="7" />
     <servers />
@@ -284,15 +306,16 @@
     <MESSAGE value="added remove username option" />
     <MESSAGE value="sql code (without table/s for polls)" />
     <MESSAGE value="sql is fun!! Arad is stupid" />
-    <MESSAGE value="all of the tables creation and minor change in text to user" />
-    <MESSAGE value="added methods for adding and deleting admins and polls, and changes admin's password to be string" />
-    <option name="LAST_COMMIT_MESSAGE" value="added methods for adding and deleting admins and polls, and changes admin's password to be string" />
+    <MESSAGE value="handling multiple register error&#10;there is no need for multiple delete handling (there is no error there...)" />
+    <MESSAGE value="updated sql_database" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated sql_database" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Final_Project$app.coverage" NAME="app Coverage Results" MODIFIED="1640790330902" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/namba_final_project$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1641324979369" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Final_Project$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1640790342366" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/namba_final_project$app.coverage" NAME="app Coverage Results" MODIFIED="1641324968583" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1640801682314" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project$app.coverage" NAME="app Coverage Results" MODIFIED="1641326060584" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />
+    <SUITE FILE_PATH="coverage/namba_final_project$app.coverage" NAME="app Coverage Results" MODIFIED="1640703502890" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/namba_final_project$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1640725841890" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1641202869029" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/App.js">
