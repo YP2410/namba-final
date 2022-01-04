@@ -34,7 +34,7 @@ CREATE TABLE polls (
                        multiple_choice bool NOT NULL,
                        quiz boolean NOT NULL,
                        correct_answers int[],
-                       solution text,
+                       solution_explanation text,
                        PRIMARY KEY (poll_ID)
 );
 
@@ -44,11 +44,13 @@ CREATE TABLE polls (
     This table stores the answers per user for a specific poll.
     This table allows us to make sure that a user can't vote twice (and more) for the same poll
     and also check who are the users who voted a specific answer at a given poll.
+    The "answers" column contains the indexes of the answers (from the answers array in the polls table) that were
+    chosen by the user.
 */
 CREATE TABLE polls_answers (
                        poll_ID text NOT NULL,
                        user_ID text NOT NULL,
-                       answers text[] NOT NULL,
+                       answers int[] NOT NULL,
                        is_correct boolean NOT NULL,
                        PRIMARY KEY (poll_ID, user_ID),
                        FOREIGN KEY (poll_ID) references polls on delete cascade,
