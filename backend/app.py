@@ -169,12 +169,6 @@ def delete_poll(poll_id):
         db.session.remove()
         raise e
 
-'''@app.route('/auth_admin', methods=['GET', 'POST'])
-def auth_admin(username, incoming_password):
-    Result=db.session.query(Admins).filter(Admins.Username == username)
-    hashed_password = Result[0].Password
-    return {"result": check_password_hash(hashed_password, incoming_password)}'''
-
 @app.route('/auth_admin/<username>/<password>', methods=['GET', 'POST'])
 def auth_admin(username, password):
     try:
