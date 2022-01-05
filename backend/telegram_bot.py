@@ -17,11 +17,13 @@ import logging
 
 import psycopg2.errors
 import sqlalchemy.exc
-from telegram import Update, ForceReply
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from telegram import (Poll, ParseMode, KeyboardButton, KeyboardButtonPollType,
+                      ReplyKeyboardMarkup, ReplyKeyboardRemove, Update, Bot, )
+from telegram.ext import Updater, CommandHandler,PollAnswerHandler, PollHandler, \
+    MessageHandler, Filters, CallbackContext
 
 # Enable logging
-from app import submit, delete, add_poll, add_admin, delete_admin, delete_poll
+from app import submit, delete, add_poll, add_admin, delete_admin, delete_poll, add_answer
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
@@ -32,6 +34,33 @@ logger = logging.getLogger(__name__)
 
 # Define a few command handlers. These usually take the two arguments update and
 # context.
+
+
+def poll(chat_id, question, answers) -> None:
+    """Sends a predefined poll"""
+    message = Bot("5029169709:AAHvskSVaIUTmMDeJW-6XBoOzi-IC4naEjA").send_poll(
+        chat_id,
+        question,
+        answers,
+        is_anonymous=False,
+        allows_multiple_answers=True,
+    )
+    add_poll(message.poll.id, question, answers, [], 0, 0, 0 , [], "" )
+    # Save some info about the poll the bot_data for later use in receive_poll_answer
+
+
+
+def receive_poll_answer(update: Update, context: CallbackContext) -> None:
+    """Summarize a users poll vote"""
+    answer = update.poll_answer
+    print("answer\n")
+    print(answer)
+    poll_id = answer.poll_id
+    chat_id = answer.user.id
+    chosen_answer = answer.option_ids
+    add_answer(poll_id, chat_id, chosen_answer, 1)
+
+
 
 def remove(update: Update, context: CallbackContext) -> None:
     user = update.effective_user
@@ -125,13 +154,14 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("register", register))
     dispatcher.add_handler(CommandHandler("remove", remove))
     dispatcher.add_handler(CommandHandler("help", help_command))
-
+    dispatcher.add_handler(PollAnswerHandler(receive_poll_answer))
+    #dispatcher.add_handler(CommandHandler('poll', poll))
     # on non command i.e message - echo the message on Telegram
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
 
     # Start the Bot
     updater.start_polling()
-
+    poll(5045706840, "How are you?", ["Good", "Really good", "Fantastic", "Great"])
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.

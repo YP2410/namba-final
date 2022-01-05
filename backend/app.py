@@ -143,10 +143,8 @@ def delete_admin(username):
         raise e
 
 @app.route('/add_poll', methods=['GET', 'POST'])
-def add_poll(question, answers, answers_counter, closed, multiple_choice,
+def add_poll(poll_id, question, answers, answers_counter, closed, multiple_choice,
              quiz, correct_answers, solution):
-    Result=db.session.query(Poll_ID).all()
-    poll_id = Result[0].poll_ID
 
     try:
         poll = Polls(poll_id, question, answers, answers_counter, closed, multiple_choice,
@@ -157,8 +155,20 @@ def add_poll(question, answers, answers_counter, closed, multiple_choice,
         db.session.remove()
         raise e
 
-    Result[0].poll_ID += 1
-    db.session.commit()
+
+
+@app.route('/add_answer', methods=['GET', 'POST'])
+def add_answer(poll_id, user_id, answers, is_correct):
+
+    try:
+        answer = Polls_answers(poll_id, user_id, answers, is_correct)
+        #add code for adding an answer to the answers_counter
+        db.session.add(answer)
+        db.session.commit()
+    except Exception as e:
+        db.session.remove()
+        raise e
+
 
 @app.route('/delete_poll', methods=['POST'])
 def delete_poll(poll_id):
