@@ -1,0 +1,26 @@
+@media all and (min-width: 480px) {
+  .AdminSignInForm {
+    padding: 60px 0;
+  }
+
+  .AdminSignInForm form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+}
+
+.custom-btn, .custom-btn:disabled {
+  background: #fff;
+  color: red;
+  border: 2px solid #9f7474;
+  border-radius: 3px;
+  padding: 5px 10px;
+}
+
+.custom-btn:hover:enabled {
+  background: #580fa4;
+  color: red;
+  border: 2px solid #9f7474;
+  border-radius: 3px;
+  padding: 5px 10px;
+}

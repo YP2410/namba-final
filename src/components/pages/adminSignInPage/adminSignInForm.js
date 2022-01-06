@@ -1,9 +1,12 @@
 import React, {useState} from "react";
 import {APIBase} from "../../../constAttributes";
 import {useAppContext} from "../../../lib/contextLib";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import "./adminSignInForm.css"
 
 
-export const SignInForm = () => {
+export const AdminSignInForm = () => {
     const { userHasAuthenticated } = useAppContext();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -31,21 +34,20 @@ export const SignInForm = () => {
 
     return(
         <div className = "SignInForm">
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Name:
-                    <input name="username" type="username" className="form-control" placeholder="Enter username" value={username}
+            <Form onSubmit={handleSubmit}>
+                <Form.Group size="lg" controlId="username">
+                <Form.Label>Name</Form.Label>
+                    <Form.Control type="username"  placeholder="Enter username" value={username}
                            onChange={(e) => setUsername(e.target.value)}/>
-                </label>
-                <br></br>
-                <label>
-                    Password:
-                    <input name="password" type="password" className="form-control" placeholder="Enter password" value={password}
+                    </Form.Group>
+                <Form.Group size="lg" controlId="password">
+                <Form.Label>Password:</Form.Label>
+                    <Form.Control type="password"  placeholder="Enter password" value={password}
                            onChange={(e) => setPassword(e.target.value)}/>
-                </label>
-                <br></br>
-                <button type="submit" value="Submit" disabled={!validateForm()} > Submit</button>
-            </form>
+
+                     </Form.Group>
+                <Button className="custom-btn" type="submit" block size="lg" disabled={!validateForm()} > SignIn</Button>
+            </Form>
         </div>
     );
 }
