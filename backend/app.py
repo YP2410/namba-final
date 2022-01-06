@@ -186,7 +186,7 @@ def auth_admin(username, password):
         hashed_password = Result[0].Password
     except Exception as e:
         print("Exception is " + str(e))
-        return {"result": "Username and/or password is not correct"}
+        return {"result": False}
     return {"result": check_password_hash(hashed_password, password)}
 
 @app.route('/generate_hash')

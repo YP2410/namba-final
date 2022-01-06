@@ -1,6 +1,7 @@
 import './App.css';
 import React, {useState} from "react";
 import AdminSignInPage from "./components/pages/adminSignInPage/adminSignInPage";
+import {AdminMainPage} from "./components/pages/adminMainPage/adminMainPage";
 import { AppContext } from "./lib/contextLib";
 
 function App() {
@@ -9,7 +10,7 @@ function App() {
     <div className="App">
         <header className="App-header">
             <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
-                {isAuthenticated ? (<h1> Is Logged In!!</h1>) : (<AdminSignInPage/>)}
+                {isAuthenticated ? (<AdminMainPage/>) : (<AdminSignInPage/>)}
                 </AppContext.Provider>
         </header>
     </div>

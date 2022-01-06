@@ -8,6 +8,10 @@ export const SignInForm = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    function validateForm() {
+    return username.length > 0 && password.length > 0;
+  }
+
     function handleSubmit(event) {
         event.preventDefault();
         //alert("submitted")
@@ -16,8 +20,11 @@ export const SignInForm = () => {
             .then(data => {
                 //console.log(data);
                 if (data.result === true){
-                    console.log("auth is true");
+                    //console.log("auth is true");
                     userHasAuthenticated(true);
+                }
+                else{
+                    alert("User and/or password is not correct");
                 }
             });
     }
@@ -37,7 +44,7 @@ export const SignInForm = () => {
                            onChange={(e) => setPassword(e.target.value)}/>
                 </label>
                 <br></br>
-                <button type="submit" value="Submit" > Submit</button>
+                <button type="submit" value="Submit" disabled={!validateForm()} > Submit</button>
             </form>
         </div>
     );
