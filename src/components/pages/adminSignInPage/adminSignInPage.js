@@ -1,14 +1,14 @@
+import React, {useState} from 'react';
 import {AdminSignInForm} from "./adminSignInForm";
+import {SignInForm} from "./adminSignInForm";
 
-export const AdminSignInPage = () => {
+const AdminSignInPage = () => {
     return(
-        <>
-            <div className={"adminSignInPage"}>
                 <header className="App-header">
                 <h1>Admin page</h1>
-                <AdminSignInForm/>
+                <SignInForm/>
                 </header>
-            </div>
-        </>
     )
 }
+
+export default AdminSignInPage;
