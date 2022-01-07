@@ -130,7 +130,7 @@ def add_admin(username, password):
     except Exception as e:
         db.session.remove()
         raise e
-    return {"result": "wow"}
+    return {"result": True}
 
 
 @app.route('/delete_admin', methods=['POST'])
