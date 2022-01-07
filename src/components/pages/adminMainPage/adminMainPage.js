@@ -17,11 +17,18 @@ export const AdminMainPage = () => {
     navigate(path);
   }
 
+  const routeChangeToPollResults = () =>{
+    let path = `/pollResults`;
+    navigate(path);
+  }
+
     return(
         <>
             <div className={"adminMainPage"}>
                 <h1>Admin MAIN page</h1>
                 <Button className="custom-btn" onClick={routeChangeToPollCreation} > Create a new poll </Button>
+                <br></br>
+                <Button className="custom-btn" onClick={routeChangeToPollResults} > See polls results </Button>
                 <br></br>
                 <Button className="custom-btn" onClick={routeChangeToAddAdmin} > Add an admin </Button>
             </div>

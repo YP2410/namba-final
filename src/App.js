@@ -1,10 +1,19 @@
 import './App.css';
 import React, {useState} from "react";
-import AdminSignInPage from "./components/pages/adminSignInPage/adminSignInPage";
-import {AdminMainPage} from "./components/pages/adminMainPage/adminMainPage";
+import Navbar from "react-bootstrap/Navbar";
 import { AppContext } from "./lib/contextLib";
 import RoutesInApp from "./RoutesInApp";
 
+
+/*          not sure if to add yet, need to think if necessary and looks good...
+
+<Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
+                    <Navbar.Brand className="font-weight-bold text-muted">
+                        Namba Final Project :-)
+                    </Navbar.Brand>
+                    <Navbar.Toggle/>
+                </Navbar>
+*/
 
 function App() {
     const [isAuthenticated, userHasAuthenticated] = useState(false);

@@ -11,16 +11,18 @@
 
 .custom-btn, .custom-btn:disabled {
   background: #fff;
-  color: red;
+  color: #000000;
   border: 2px solid #9f7474;
   border-radius: 3px;
   padding: 5px 10px;
+  margin: 5px;
 }
 
 .custom-btn:hover:enabled {
-  background: #580fa4;
-  color: red;
+  background: #c9c9c9;
+  color: #000000;
   border: 2px solid #9f7474;
   border-radius: 3px;
   padding: 5px 10px;
+  margin: 5px;
 }
