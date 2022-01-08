@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from flask_cors import CORS, cross_origin
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.ext.mutable import Mutable
+from sqlalchemy.dialects.postgresql import ARRAY
 
 import backend.telegram_bot
 
@@ -28,6 +30,29 @@ class Poll_ID(db.Model):
         self.poll_ID = 0
 
 
+class MutableList(Mutable, list):
+    def append(self, value):
+        list.append(self, value)
+        self.changed()
+
+    @classmethod
+    def coerce(cls, key, value):
+        if not isinstance(value, MutableList):
+            if isinstance(value, list):
+                return MutableList(value)
+            return Mutable.coerce(key, value)
+        else:
+            return value
+
+    def __setitem__(self, key, value):
+        list.__setitem__(self, key, value)
+        self.changed()
+
+    def updateItem(self, key, value):
+        self.__setitem__(key, value)
+
+
+
 class Admins(db.Model):
     __tablename__='admins'
     Username=db.Column(db.String(40),primary_key=True)
@@ -42,7 +67,7 @@ class Polls(db.Model):
     poll_ID=db.Column(db.String(40),primary_key=True)
     question=db.Column(db.String(255))
     answers = db.Column(db.ARRAY(db.String(100)))
-    answers_counter = db.Column(db.ARRAY(db.Integer))
+    answers_counter = db.Column(MutableList.as_mutable(ARRAY(db.Integer)))
     closed = db.Column(db.BOOLEAN)
     multiple_choice = db.Column(db.BOOLEAN)
     quiz = db.Column(db.BOOLEAN)
@@ -176,12 +201,15 @@ def add_answer(poll_id, user_id, answers, is_correct):
 
     try:
         answer = Polls_answers(poll_id, user_id, answers, is_correct)
-        #add code for adding an answer to the answers_counter
-        Result=db.session.query(Polls).filter(Polls.poll_ID == poll_id)
-        for a in answers:
-            Result.answers_counter[a] += 1
         db.session.add(answer)
         db.session.commit()
+        #add code for adding an answer to the answers_counter
+        Result=db.session.query(Polls).filter(Polls.poll_ID == poll_id).first()
+        for a in answers:
+            counter = Result.answers_counter[a] + 1
+            Result.answers_counter.updateItem(a, counter)
+            db.session.commit()
+
     except Exception as e:
         db.session.remove()
         raise e
