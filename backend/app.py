@@ -148,7 +148,7 @@ def delete_admin(username):
 @app.route('/init_poll', methods=['GET', 'POST'])
 def init_poll(question, answers):
     #in the futute will need to send to the poll function a list of chat_id's
-    poll(0 , question, answers)
+    poll(5045706840 , question, answers)
 
 @app.route('/add_poll', methods=['GET', 'POST'])
 def add_poll(poll_id, question, answers, answers_counter, closed, multiple_choice,
