@@ -4,6 +4,8 @@ from sqlalchemy import ForeignKey
 from flask_cors import CORS, cross_origin
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from backend.telegram_bot import poll
+
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:porat2410@localhost/Namba'
@@ -141,6 +143,12 @@ def delete_admin(username):
     except Exception as e:
         db.session.remove()
         raise e
+
+
+@app.route('/init_poll', methods=['GET', 'POST'])
+def init_poll(question, answers):
+    #in the futute will need to send to the poll function a list of chat_id's
+    poll(0 , question, answers)
 
 @app.route('/add_poll', methods=['GET', 'POST'])
 def add_poll(poll_id, question, answers, answers_counter, closed, multiple_choice,
