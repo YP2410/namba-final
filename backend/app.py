@@ -177,6 +177,9 @@ def add_answer(poll_id, user_id, answers, is_correct):
     try:
         answer = Polls_answers(poll_id, user_id, answers, is_correct)
         #add code for adding an answer to the answers_counter
+        Result=db.session.query(Polls).filter(Polls.poll_ID == poll_id)
+        for a in answers:
+            Result.answers_counter[a] += 1
         db.session.add(answer)
         db.session.commit()
     except Exception as e:

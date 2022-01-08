@@ -50,7 +50,8 @@ def poll(chat_id, question, answers, multiple_choice) -> None:
         multiple_choice = 1
     else:
         multiple_choice = 0
-    app.add_poll(message.poll.id, question, answers, [], 0, multiple_choice, 0, [], "")
+    ans = [0 for a in answers]
+    app.add_poll(message.poll.id, question, answers, ans, 0, multiple_choice, 0, [], "")
     # Save some info about the poll the bot_data for later use in receive_poll_answer
 
 
@@ -166,7 +167,7 @@ def main() -> None:
 
     # Start the Bot
     updater.start_polling()
-    #poll(5045706840, "How are you?", ["Good", "Really good", "Fantastic", "Great"])
+    #poll(5045706840, "How are you?", ["Good", "Really good", "Fantastic", "Great"], False)
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
