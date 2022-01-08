@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="454ce11f-7401-48b3-b881-14c43c598272" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/namba-final-project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/namba-final-project.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/telegram_bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/telegram_bot.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +112,7 @@
       <recent name="C:\technion\semester_7\Namba\Final_Project\templates" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.app">
+  <component name="RunManager" selected="Python.telegram_bot">
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
@@ -178,8 +178,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.app" />
         <item itemvalue="Python.telegram_bot" />
+        <item itemvalue="Python.app" />
       </list>
     </recent_temporary>
   </component>
@@ -202,7 +202,7 @@
       <workItem from="1641195504252" duration="9689000" />
       <workItem from="1641242352466" duration="6395000" />
       <workItem from="1641324260798" duration="9541000" />
-      <workItem from="1641658256028" duration="1574000" />
+      <workItem from="1641658256028" duration="3520000" />
     </task>
     <task id="LOCAL-00001" summary="flask is integrated with postgresql">
       <created>1640695155934</created>
@@ -267,7 +267,21 @@
       <option name="project" value="LOCAL" />
       <updated>1641408114411</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="init poll function">
+      <created>1641659857561</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1641659857561</updated>
+    </task>
+    <task id="LOCAL-00011" summary="changed init poll function chat_id to mine">
+      <created>1641659951479</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1641659951479</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -324,14 +338,16 @@
     <MESSAGE value="it's wroking!!!!" />
     <MESSAGE value="whoopsi daisy" />
     <MESSAGE value="code for adding polls and inserting polls and answers to our DB" />
-    <option name="LAST_COMMIT_MESSAGE" value="code for adding polls and inserting polls and answers to our DB" />
+    <MESSAGE value="init poll function" />
+    <MESSAGE value="changed init poll function chat_id to mine" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed init poll function chat_id to mine" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Final_Project$app.coverage" NAME="app Coverage Results" MODIFIED="1640790330902" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Final_Project$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1641202869029" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />
-    <SUITE FILE_PATH="coverage/namba_final_project$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1641407997157" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/namba_final_project$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1641660532074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Final_Project$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1640790342366" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/namba_final_project$app.coverage" NAME="app Coverage Results" MODIFIED="1641659219005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />
+    <SUITE FILE_PATH="coverage/namba_final_project$app.coverage" NAME="app Coverage Results" MODIFIED="1641660446911" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/App.js">

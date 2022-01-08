@@ -37,16 +37,16 @@ logger = logging.getLogger(__name__)
 # context.
 
 
-def poll(chat_id, question, answers) -> None:
+def poll(chat_id, question, answers, multiple_choice) -> None:
     """Sends a predefined poll"""
     message = Bot("5029169709:AAHvskSVaIUTmMDeJW-6XBoOzi-IC4naEjA").send_poll(
         chat_id,
         question,
         answers,
         is_anonymous=False,
-        allows_multiple_answers=True,
+        allows_multiple_answers=multiple_choice,
     )
-    app.add_poll(message.poll.id, question, answers, [], 0, 0, 0 , [], "" )
+    app.add_poll(message.poll.id, question, answers, [], 0, multiple_choice , 0 , [], "" )
     # Save some info about the poll the bot_data for later use in receive_poll_answer
 
 

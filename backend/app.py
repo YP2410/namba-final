@@ -146,12 +146,12 @@ def delete_admin(username):
 
 
 @app.route('/init_poll/<question>/<answers>', methods=['GET', 'POST'])
-def init_poll(question, answers):
+def init_poll(question, answers, multiple_choice):
     try:
         answers = answers.split(',')
         answers = [a for a in answers if len(a) > 0]
         # in the future will need to send to the poll function a list of chat_id's
-        backend.telegram_bot.poll(5045706840, question, answers)
+        backend.telegram_bot.poll(5045706840, question, answers, multiple_choice)
     except Exception as e:
         raise e
     return {"result": True}
