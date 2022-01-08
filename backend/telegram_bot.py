@@ -162,7 +162,7 @@ def main() -> None:
 
     # Start the Bot
     updater.start_polling()
-    poll(5045706840, "How are you?", ["Good", "Really good", "Fantastic", "Great"])
+    #poll(5045706840, "How are you?", ["Good", "Really good", "Fantastic", "Great"])
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
