@@ -18,7 +18,7 @@ export const AdminMainPage = () => {
   }
 
   const routeChangeToPollResults = () =>{
-    let path = `/pollResults`;
+    let path = `/pollsResults`;
     navigate(path);
   }
 

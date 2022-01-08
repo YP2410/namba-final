@@ -6,6 +6,7 @@ import {AdminMainPage} from "./components/pages/adminMainPage/adminMainPage";
 import CreatePollPage from "./components/pages/createPollPage/createPollPage";
 import NotFound from "./components/pages/notFoundPage/notFoundPage";
 import AddAdminPage from "./components/pages/addAdminPage/addAdminPage";
+import {PollsResultsPage} from "./components/pages/pollsResultsPage/pollsResultsPage";
 
 export default function RoutesInApp() {
     const {isAuthenticated} = useAppContext();
@@ -15,6 +16,7 @@ export default function RoutesInApp() {
             : (<Route exact path="/" element={<AdminSignInPage/>}/>)}
         <Route exact path="/main" element={<AdminMainPage/>}/>
         <Route exact path="/createPoll" element={<CreatePollPage/>}/>
+        <Route exact path="/pollsResults" element={<PollsResultsPage/>}/>
         <Route exact path="/addAdmin" element={<AddAdminPage/>}/>
         <Route path="*" element={<NotFound/>}/>
     </Routes>
