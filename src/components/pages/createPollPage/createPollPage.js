@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./createPollPage.css"
+import {APIBase} from "../../../constAttributes";
 
 
 const CreatePollPage = () => {
@@ -18,7 +19,27 @@ const CreatePollPage = () => {
   }
 
     function handleSubmit(event){
-        alert("Poll submitted!!")
+        event.preventDefault();
+        //alert("Poll submitted!!")
+        // init_poll: question, answers[]
+        let answers = [option1, option2, option3, option4];
+        //let data = {'question': question, 'answers': answers};
+        fetch(APIBase + "/init_poll/" + question + "/" + answers, {
+            method: 'POST',
+            mode: "cors",
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if(data.result === true){
+                    alert("submitted successfully")
+                }
+            })
+            .catch(e => {
+                console.log(e);
+                alert("error has occurred");
+            });
+
     }
     return(
         <div className={"createPollPage"}>
@@ -26,24 +47,24 @@ const CreatePollPage = () => {
             <Form onSubmit={handleSubmit}>
                 <Form.Group size="lg" controlId="pollQuestion">
                     <Form.Label>Poll Question</Form.Label>
-                    <Form.Control placeholder="Enter poll question" value={question}
+                    <Form.Control placeholder="Enter poll question (required)" value={question}
                                   as="textarea" rows="3"
                                   onChange={(e) => setQuestion(e.target.value)}/>
                 </Form.Group>
                 <Form.Group size="lg" controlId="pollOption1">
-                    <Form.Control placeholder="Option 1" value={option1}
+                    <Form.Control placeholder="Option 1 (required)" value={option1}
                                   onChange={(e) => setoption1(e.target.value)}/>
                 </Form.Group>
                 <Form.Group size="lg" controlId="pollOption2">
-                    <Form.Control placeholder="Option 2" value={option2}
+                    <Form.Control placeholder="Option 2 (required)" value={option2}
                                   onChange={(e) => setoption2(e.target.value)}/>
                 </Form.Group>
                 <Form.Group size="lg" controlId="pollOption3">
-                    <Form.Control placeholder="Option 3" value={option3}
+                    <Form.Control placeholder="Option 3 (optional)" value={option3}
                                   onChange={(e) => setoption3(e.target.value)}/>
                 </Form.Group>
                 <Form.Group size="lg" controlId="pollOption4">
-                    <Form.Control placeholder="Option 4" value={option4}
+                    <Form.Control placeholder="Option 4 (optional)" value={option4}
                                   onChange={(e) => setoption4(e.target.value)}/>
                 </Form.Group>
                 <Button className="custom-btn" type="submit" block size="lg" disabled={!validateForm()} > Submit Poll</Button>

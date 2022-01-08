@@ -23,7 +23,8 @@ from telegram.ext import Updater, CommandHandler,PollAnswerHandler, PollHandler,
     MessageHandler, Filters, CallbackContext
 
 # Enable logging
-from app import submit, delete, add_poll, add_admin, delete_admin, delete_poll, add_answer
+# from app import submit, delete, add_poll, add_admin, delete_admin, delete_poll, add_answer
+import app
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
@@ -45,7 +46,7 @@ def poll(chat_id, question, answers) -> None:
         is_anonymous=False,
         allows_multiple_answers=True,
     )
-    add_poll(message.poll.id, question, answers, [], 0, 0, 0 , [], "" )
+    app.add_poll(message.poll.id, question, answers, [], 0, 0, 0 , [], "" )
     # Save some info about the poll the bot_data for later use in receive_poll_answer
 
 
@@ -58,7 +59,7 @@ def receive_poll_answer(update: Update, context: CallbackContext) -> None:
     poll_id = answer.poll_id
     chat_id = answer.user.id
     chosen_answer = answer.option_ids
-    add_answer(poll_id, chat_id, chosen_answer, 1)
+    app.add_answer(poll_id, chat_id, chosen_answer, 1)
 
 
 
@@ -74,7 +75,7 @@ def remove(update: Update, context: CallbackContext) -> None:
             # reply_markup=ForceReply(selective=True),
         )
         return'''
-    delete(str(user.id))
+    app.delete(str(user.id))
     update.message.reply_markdown_v2(
         'You are now removed\.\n'
         # reply_markup=ForceReply(selective=True),
@@ -84,7 +85,7 @@ def remove(update: Update, context: CallbackContext) -> None:
 def register(update: Update, context: CallbackContext) -> None:
     user = update.effective_user
     try:
-        submit(str(user.id), user.name)
+        app.submit(str(user.id), user.name)
         #add_poll("Is Daniel Balool", ["yes", "no", "obviously"], [0,0,0], 0, 0, 0, [0], "yes" )
         #delete_admin("yaron")
         #delete_poll("1")

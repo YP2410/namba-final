@@ -4,7 +4,7 @@ from sqlalchemy import ForeignKey
 from flask_cors import CORS, cross_origin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from backend.telegram_bot import poll
+import backend.telegram_bot
 
 app = Flask(__name__)
 CORS(app)
@@ -145,10 +145,16 @@ def delete_admin(username):
         raise e
 
 
-@app.route('/init_poll', methods=['GET', 'POST'])
+@app.route('/init_poll/<question>/<answers>', methods=['GET', 'POST'])
 def init_poll(question, answers):
-    #in the futute will need to send to the poll function a list of chat_id's
-    poll(5045706840 , question, answers)
+    try:
+        answers = answers.split(',')
+        answers = [a for a in answers if len(a) > 0]
+        # in the future will need to send to the poll function a list of chat_id's
+        backend.telegram_bot.poll(5045706840, question, answers)
+    except Exception as e:
+        raise e
+    return {"result": True}
 
 @app.route('/add_poll', methods=['GET', 'POST'])
 def add_poll(poll_id, question, answers, answers_counter, closed, multiple_choice,
