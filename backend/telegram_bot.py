@@ -46,7 +46,11 @@ def poll(chat_id, question, answers, multiple_choice) -> None:
         is_anonymous=False,
         allows_multiple_answers=multiple_choice,
     )
-    app.add_poll(message.poll.id, question, answers, [], 0, multiple_choice , 0 , [], "" )
+    if multiple_choice:
+        multiple_choice = 1
+    else:
+        multiple_choice = 0
+    app.add_poll(message.poll.id, question, answers, [], 0, multiple_choice, 0, [], "")
     # Save some info about the poll the bot_data for later use in receive_poll_answer
 
 

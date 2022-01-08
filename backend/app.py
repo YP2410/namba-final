@@ -145,7 +145,7 @@ def delete_admin(username):
         raise e
 
 
-@app.route('/init_poll/<question>/<answers>', methods=['GET', 'POST'])
+@app.route('/init_poll/<question>/<answers>/<multiple_choice>', methods=['GET', 'POST'])
 def init_poll(question, answers, multiple_choice):
     try:
         answers = answers.split(',')

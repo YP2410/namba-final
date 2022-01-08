@@ -13,6 +13,7 @@ const CreatePollPage = () => {
     const [option2, setoption2] = useState("");
     const [option3, setoption3] = useState("");
     const [option4, setoption4] = useState("");
+    const [multiple, setMultiple] = useState(false);
 
     function validateForm() {
     return question.length > 0 && option1.length > 0 && option2.length > 0;
@@ -24,7 +25,7 @@ const CreatePollPage = () => {
         // init_poll: question, answers[]
         let answers = [option1, option2, option3, option4];
         //let data = {'question': question, 'answers': answers};
-        fetch(APIBase + "/init_poll/" + question + "/" + answers, {
+        fetch(APIBase + "/init_poll/" + question + "/" + answers +"/" + multiple, {
             method: 'POST',
             mode: "cors",
         })
@@ -66,6 +67,9 @@ const CreatePollPage = () => {
                 <Form.Group size="lg" controlId="pollOption4">
                     <Form.Control placeholder="Option 4 (optional)" value={option4}
                                   onChange={(e) => setoption4(e.target.value)}/>
+                </Form.Group>
+                <Form.Group size="lg" controlId="pollOption4">
+                    <Form.Check label="multiple choice" checked={multiple} onChange={e => setMultiple(e.target.checked)}/>
                 </Form.Group>
                 <Button className="custom-btn" type="submit" block size="lg" disabled={!validateForm()} > Submit Poll</Button>
             </Form>
