@@ -241,25 +241,30 @@ def generate_hash(incoming_password):
 
 @app.route('/all_polls_data', methods=['GET', 'POST'])
 def all_polls_data():
-    polls = [
-    ]
+    polls = {}
     try:
-        Result=db.session.query(Polls).all()
+        Result = db.session.query(Polls).all()
+        print("wow1")
+        i = 0
         for poll in Result:
-            polls.append({
+            polls[i] = {
                 "poll_ID": poll.poll_ID,
-                "question":poll.question,
-                "answers":poll.answers,
-                "answers_counter":poll.answers_counter,
-                "multiple_choice":poll.multiple_choice,
-                "correct_answers":poll.correct_answers,
-                "solution":poll.solution
-            })
+                "question": poll.question,
+                "answers": poll.answers,
+                "answers_counter": poll.answers_counter,
+                "multiple_choice": poll.multiple_choice,
+                "correct_answers": poll.correct_answers,
+                "solution": poll.solution
+            }
+            i += 1
 
     except Exception as e:
+        # print("error is fun!!!!")
         db.session.remove()
         raise e
-    print(polls)
+    # print(polls)
+    # print(type(polls))
+    # print(len(polls))
     return polls
 
 @app.route('/all_users_data', methods=['GET', 'POST'])
