@@ -280,6 +280,25 @@ def all_users_data():
     print(users)
     return users
 
+@app.route('/poll_answers', methods=['GET', 'POST'])
+def poll_answers(poll_id):
+    answers = {}
+    try:
+        Result=db.session.query(Polls).filter(Polls.poll_ID == poll_id).first()
+
+        for i in range(len(Result.answers)):
+          key = Result.answers[i]
+          value = Result.answers_counter[i]
+          answers[key] = value
+
+
+    except Exception as e:
+        db.session.remove()
+        raise e
+    print(answers)
+    return answers
+
 if __name__ == '__main__':  #python interpreter assigns "__main__" to the file you run
     #all_users_data()
+    #poll_answers("5967495296991625252")
     app.run(debug=True)
