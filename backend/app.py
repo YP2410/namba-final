@@ -284,7 +284,7 @@ def all_users_data():
         raise e
     print(users)
     return users
-
+#function that receives poll_ID and returns dict of answer and number of votes it got
 @app.route('/poll_answers', methods=['GET', 'POST'])
 def poll_answers(poll_id):
     answers = {}
@@ -303,7 +303,26 @@ def poll_answers(poll_id):
     print(answers)
     return answers
 
+#function that receives user_ID and returns dict of poll_ID's and the specific user answers to the polls
+@app.route('/specific_user_answers', methods=['GET', 'POST'])
+def specific_user_answers(user_id):
+    answers = {}
+    try:
+        Result=db.session.query(Polls_answers).filter(Polls_answers.user_ID == user_id).all()
+        for res in Result:
+            key = res.poll_ID
+            value = res.answers
+            answers[key] = value
+
+
+    except Exception as e:
+        db.session.remove()
+        raise e
+    print(answers)
+    return answers
+
 if __name__ == '__main__':  #python interpreter assigns "__main__" to the file you run
     #all_users_data()
     #poll_answers("5967495296991625252")
+    #specific_user_answers("5045706840")
     app.run(debug=True)
