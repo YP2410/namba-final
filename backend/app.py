@@ -5,7 +5,7 @@ from flask_cors import CORS, cross_origin
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.ext.mutable import Mutable
 from sqlalchemy.dialects.postgresql import ARRAY
-
+import json
 import backend.telegram_bot
 
 app = Flask(__name__)
@@ -238,5 +238,48 @@ def auth_admin(username, password):
 def generate_hash(incoming_password):
     return generate_password_hash(incoming_password)
 
+
+@app.route('/all_polls_data', methods=['GET', 'POST'])
+def all_polls_data():
+    polls = [
+    ]
+    try:
+        Result=db.session.query(Polls).all()
+        for poll in Result:
+            polls.append({
+                "poll_ID": poll.poll_ID,
+                "question":poll.question,
+                "answers":poll.answers,
+                "answers_counter":poll.answers_counter,
+                "multiple_choice":poll.multiple_choice,
+                "correct_answers":poll.correct_answers,
+                "solution":poll.solution
+            })
+
+    except Exception as e:
+        db.session.remove()
+        raise e
+    print(polls)
+    return polls
+
+@app.route('/all_users_data', methods=['GET', 'POST'])
+def all_users_data():
+    users = [
+    ]
+    try:
+        Result=db.session.query(Student).all()
+        for user in Result:
+            users.append({
+                "user_ID": user.user_ID,
+                "name":user.name
+            })
+
+    except Exception as e:
+        db.session.remove()
+        raise e
+    print(users)
+    return users
+
 if __name__ == '__main__':  #python interpreter assigns "__main__" to the file you run
+    #all_users_data()
     app.run(debug=True)
