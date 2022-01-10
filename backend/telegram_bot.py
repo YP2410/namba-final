@@ -46,7 +46,7 @@ def poll(chat_id, question, answers, multiple_choice) -> None:
         is_anonymous=False,
         allows_multiple_answers=multiple_choice,
     )
-    if multiple_choice:
+    if multiple_choice == "true":
         multiple_choice = 1
     else:
         multiple_choice = 0
