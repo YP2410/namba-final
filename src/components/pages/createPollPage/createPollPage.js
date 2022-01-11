@@ -14,6 +14,7 @@ const CreatePollPage = () => {
     const [option3, setoption3] = useState("");
     const [option4, setoption4] = useState("");
     const [multiple, setMultiple] = useState(false);
+    const [toAll, setToAll] = useState(false);
 
     function validateForm() {
     return question.length > 0 && option1.length > 0 && option2.length > 0;
@@ -24,22 +25,25 @@ const CreatePollPage = () => {
         //alert("Poll submitted!!")
         // init_poll: question, answers[]
         let answers = [option1, option2, option3, option4];
+        //alert(multiple);
         //let data = {'question': question, 'answers': answers};
-        fetch(APIBase + "/init_poll/" + question + "/" + answers +"/" + multiple, {
-            method: 'POST',
-            mode: "cors",
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                if(data.result === true){
-                    alert("submitted successfully")
-                }
+        if (toAll) {
+            fetch(APIBase + "/send_poll_to_all/" + question + "/" + answers + "/" + multiple, {
+                method: 'POST',
+                mode: "cors",
             })
-            .catch(e => {
-                console.log(e);
-                alert("error has occurred");
-            });
+                .then(res => res.json())
+                .then(data => {
+                    //console.log(data);
+                    if (data.result === true) {
+                        alert("submitted successfully")
+                    }
+                })
+                .catch(e => {
+                    console.log(e);
+                    alert("error has occurred");
+                });
+        }
 
     }
     return(
@@ -70,6 +74,9 @@ const CreatePollPage = () => {
                 </Form.Group>
                 <Form.Group size="lg" controlId="pollOption4">
                     <Form.Check label="multiple choice" checked={multiple} onChange={e => setMultiple(e.target.checked)}/>
+                </Form.Group>
+                <Form.Group size="lg" controlId="pollOption4">
+                    <Form.Check label="send To All" checked={toAll} onChange={e => setToAll(e.target.checked)}/>
                 </Form.Group>
                 <Button className="custom-btn" type="submit" block size="lg" disabled={!validateForm()} > Submit Poll</Button>
             </Form>
