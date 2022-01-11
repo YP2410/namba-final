@@ -86,6 +86,16 @@ class Polls(db.Model):
         self.correct_answers = correct_answers
         self.solution = solution
 
+class Mapping(db.Model):
+    __tablename__='mapping'
+    poll_ID=db.Column(db.String(40), ForeignKey(Polls.poll_ID) ,primary_key=True)
+    fake_ID=db.Column(db.String(40),primary_key=True)
+
+    def __init__(self,poll_ID, fake_ID):
+        self.poll_ID = poll_ID
+        self.fake_ID = fake_ID
+
+
 class Polls_answers(db.Model):
     __tablename__='polls_answers'
     poll_ID=db.Column(db.String(40), ForeignKey(Polls.poll_ID) ,primary_key=True)
@@ -131,6 +141,17 @@ def submit(id, name):
     try:
         student=Student(id, name)
         db.session.add(student)
+        db.session.commit()
+    except Exception as e:
+        db.session.remove()
+        raise e
+
+@app.route('/add_mapping', methods=['POST'])
+def add_mapping(poll_ID, fake_ID):
+
+    try:
+        mapping=Mapping(poll_ID, fake_ID)
+        db.session.add(mapping)
         db.session.commit()
     except Exception as e:
         db.session.remove()
@@ -237,9 +258,11 @@ def add_poll(poll_id, question, answers, answers_counter, closed, multiple_choic
 
 
 @app.route('/add_answer', methods=['GET', 'POST'])
-def add_answer(poll_id, user_id, answers, is_correct):
+def add_answer(fake_ID, user_id, answers, is_correct):
 
     try:
+        res=db.session.query(Mapping).filter(Mapping.fake_ID == fake_ID).first()
+        poll_id = res.poll_ID
         answer = Polls_answers(poll_id, user_id, answers, is_correct)
         db.session.add(answer)
         db.session.commit()
@@ -366,6 +389,6 @@ if __name__ == '__main__':  #python interpreter assigns "__main__" to the file y
     #poll_answers("5967495296991625252")
     #specific_user_answers("5045706840")
     #init_poll([5045706840, 1756044528], "asdas?", "fdsf , dfdf", True)
-    #send_poll_to_all("pika", "yes no", False)
-    #send_to_specific_voters("5967495296991625249", "1", "pika", "yes no", False)
+    #send_poll_to_all("pika", "yes , no", False)
+    #send_to_specific_voters("5976421871120285710", "1", "Youuuu", "yes , no", False)
     app.run(debug=True)
