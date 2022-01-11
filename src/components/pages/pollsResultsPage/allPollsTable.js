@@ -1,72 +1,103 @@
 import React,{ useState, useEffect }from "react"
-import { ReactTabulator } from 'react-tabulator';
+import {reactFormatter, ReactTabulator} from 'react-tabulator';
 import "tabulator-tables/dist/css/tabulator.min.css";
 import {APIBase} from "../../../constAttributes";
+import Tabulator from "tabulator-tables";
+import {useAppContext} from "../../../lib/contextLib";
 
 
 
 export const AllPollsTable = () => {
 
     //const [data,setData] = useState([{id:1, name:"Dutchman", noOfRequest: 42}])
-    const [data,setData] = useState([])
+    const [data,setData] = useState([]);
+    const {setPollData} = useAppContext();
+    const columns=[
+        {
+            title: "poll_ID",
+            field: "poll_ID",
+        },
+        {
+            title: "question",
+            field: "question",
+        },
+        {
+            title: "answers",
+            field: "answers",
+        },
+        {
+            title: "answers_counter",
+            field: "answers_counter",
+        },
+        {
+            title: "multiple_choice",
+            field: "multiple_choice",
+        },
+        {
+            title: "correct_answers",
+            field: "correct_answers",
+        },
+        {
+            title: "solution",
+            field: "solution",
+        },
+    ]
+
+
 
     function getData() {
         fetch(APIBase + "/all_polls_data",{method: 'GET', mode: "cors"})
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                //console.log("reload");
+                //console.log(data);
                 let count = Object.keys(data).length;
-                console.log(count);
+                //console.log(count);
                 let lst = [];
                 for (let i = 0; i < count; i++){
                     lst.push(data[i]);
                 }
-                console.log(lst);
+                //console.log(lst);
                 setData(lst);
-                console.log(data)
+                //console.log(data)
             })
             .catch( (e) => {
                 alert("error has occurred");
-                console.log(e);
+                //console.log(e);
             })
     }
 
+    function rowClicked(e, row){
+        //alert(row.getData());
+        console.log(row.getData());
+        setPollData(row);
+        //console.log(row.getData());
+    }
+
+
     useEffect(()=>{
-      getData()
+        //console.log("use Effect is on");
+        getData();
     },[])
 
     const options = {
-    height: '100%',
-    ajaxURL: 'http://example.com',
-    ajaxProgressiveLoad: 'scroll',
-    ajaxError: (error) => {
-      console.log('ajaxError ', error);
-    },
-  };
+        height: '100%',
+        debugInvalidOptions: false,
+        selectable: 1,
+        layout: "fitColumns",
+        pagination: "local",
+        paginationSize: 5,
+    };
 
-    const columns=[
-        /*{
-            title:"name",
-            field:"name",
-        },
-        {
-            title:"Number of Request",
-            field:"noOfRequest",
-        }*/
-        {
-            title: "question",
-            field: "question",
-        }
-    ]
 
     return(
-        <div className = "AllPollsTable">
-            <ReactTabulator
-        columns={columns}
-        layout="fitColumns"
-        data={data} // here is the state of the table
-        options={options}
-        />
-        </div>
+            <div className="AllPollsTable">
+                <ReactTabulator
+                    columns={columns}
+                    data={data} // here is the state of the table
+                    options={options}
+                    rowClick={(e,row) => rowClicked(e,row)}
+                />
+            </div>
     );
 }

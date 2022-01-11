@@ -1,16 +1,22 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, {useRef, useLayoutEffect, useState} from 'react';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import {AllPollsTable} from "./allPollsTable";
-
+import { AppContext } from "../../../lib/contextLib";
+import {Route} from "react-router-dom";
+import {AdminMainPage} from "../adminMainPage/adminMainPage";
+import AdminSignInPage from "../adminSignInPage/adminSignInPage";
 am4core.useTheme(am4themes_animated);
 
 export const PollsResultsPage = () => {
 
+    const [pollData,setPollData] = useState(null);
+
     const chart = useRef(null);
     useLayoutEffect(() => {
-    let x = am4core.create("chartdiv", am4charts.XYChart);
+        //display_table();
+        let x = am4core.create("chartdiv", am4charts.XYChart);
 
         x.data = [{
             "country": "Lithuania",
@@ -67,8 +73,12 @@ export const PollsResultsPage = () => {
 
     return(
         <>
-            <AllPollsTable/>
-            <div id="chartdiv" style={{width: "80%", height: "500px"}}/>
+            <AppContext.Provider value={{pollData, setPollData}}>
+                <AllPollsTable/>
+                {pollData != null ? (<h1> data!!</h1>)
+            : (<h1> no data...</h1>)}
+                <div id="chartdiv" style={{width: "80%", height: "500px"}}/>
+            </AppContext.Provider>
         </>
     )
 }
