@@ -69,8 +69,8 @@ export const AllPollsTable = () => {
 
     function rowClicked(e, row){
         //alert(row.getData());
-        console.log(row.getData());
-        setPollData(row);
+        //console.log(row.getData());
+        setPollData(row.getData());
         //console.log(row.getData());
     }
 

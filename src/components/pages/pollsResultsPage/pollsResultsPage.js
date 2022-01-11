@@ -4,9 +4,6 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import {AllPollsTable} from "./allPollsTable";
 import { AppContext } from "../../../lib/contextLib";
-import {Route} from "react-router-dom";
-import {AdminMainPage} from "../adminMainPage/adminMainPage";
-import AdminSignInPage from "../adminSignInPage/adminSignInPage";
 am4core.useTheme(am4themes_animated);
 
 export const PollsResultsPage = () => {
@@ -15,61 +12,51 @@ export const PollsResultsPage = () => {
 
     const chart = useRef(null);
     useLayoutEffect(() => {
-        //display_table();
-        let x = am4core.create("chartdiv", am4charts.XYChart);
 
-        x.data = [{
-            "country": "Lithuania",
-            "litres": 501
-        }, {
-            "country": "Czechia",
-            "litres": 301
-        }, {
-            "country": "Ireland",
-            "litres": 201
-        }, {
-            "country": "Germany",
-            "litres": 165
-        }, {
-            "country": "Australia",
-            "litres": 139
-        }, {
-            "country": "Austria",
-            "litres": 128
-        }, {
-            "country": "UK",
-            "litres": 99
-        }, {
-            "country": "Belgium",
-            "litres": 60
-        }, {
-            "country": "The Netherlands",
-            "litres": 50
-        }];
+        if (pollData != null) {
+            let x = am4core.create("chartdiv", am4charts.XYChart);
+
+            let answers = pollData.answers;
+            let answers_counter = pollData.answers_counter;
+            //console.log(pollData);
+            //console.log(answers);
+            //console.log(answers_counter);
+
+            let categoryAxis = x.xAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.dataFields.category = "answer";
+            categoryAxis.title.text = "Answers";
+
+            let valueAxis = x.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.title.text = "Votes";
 
 
-    let categoryAxis = x.xAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.dataFields.category = "country";
-    categoryAxis.title.text = "Countries";
+            let series = x.series.push(new am4charts.ColumnSeries());
+            series.name = "votes";
+            //series.columns.template.tooltipText = "Series: {name}\nCategory: {categoryX}\nValue: {valueY}";
+            series.columns.template.fill = am4core.color("#4cd20c"); // fill
+            series.dataFields.valueY = "votes";
+            series.dataFields.categoryX = "answer";
 
-    let valueAxis = x.yAxes.push(new am4charts.ValueAxis());
-    valueAxis.title.text = "Litres sold (M)";
+            let count = Object.keys(answers).length;
+            let lst = [];
+            for (let i = 0; i < count; i++){
+                    lst.push({
+                        "answer": answers[i],
+                        "votes": answers_counter[i]
+                    });
+                }
 
+            x.data = lst;
+            console.log(x.data);
 
-    let series = x.series.push(new am4charts.ColumnSeries());
-    series.name = "Sales";
-    //series.columns.template.tooltipText = "Series: {name}\nCategory: {categoryX}\nValue: {valueY}";
-    series.columns.template.fill = am4core.color("#4cd20c"); // fill
-    series.dataFields.valueY = "litres";
-    series.dataFields.categoryX = "country";
+            chart.current = x;
 
-    chart.current = x;
-
-    return () => {
-      x.dispose();
-      //
-    };
-  }, []);
+            return () => {
+                x.dispose();
+                //
+            };
+        }
+  }, [pollData]);
 
     return(
         <>
