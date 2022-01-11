@@ -86,6 +86,16 @@ class Polls(db.Model):
         self.correct_answers = correct_answers
         self.solution = solution
 
+class Mapping(db.Model):
+    __tablename__='mapping'
+    poll_ID=db.Column(db.String(40), ForeignKey(Polls.poll_ID) ,primary_key=True)
+    fake_ID=db.Column(db.String(40),primary_key=True)
+
+    def __init__(self,poll_ID, fake_ID):
+        self.poll_ID = poll_ID
+        self.fake_ID = fake_ID
+
+
 class Polls_answers(db.Model):
     __tablename__='polls_answers'
     poll_ID=db.Column(db.String(40), ForeignKey(Polls.poll_ID) ,primary_key=True)
@@ -112,7 +122,7 @@ def message():
     # return render_template("index.html")
     # return send_from_directory(app.static_folder, 'build/index.html')
     return {'message': '1234'}
-
+'''
 @app.route('/init_pollID', methods=['POST'])
 def init_pollID():
 
@@ -122,7 +132,7 @@ def init_pollID():
         db.session.commit()
     except Exception as e:
         db.session.remove()
-        raise e
+        raise e'''
 
 
 @app.route('/submit', methods=['POST'])
@@ -131,6 +141,17 @@ def submit(id, name):
     try:
         student=Student(id, name)
         db.session.add(student)
+        db.session.commit()
+    except Exception as e:
+        db.session.remove()
+        raise e
+
+@app.route('/add_mapping', methods=['POST'])
+def add_mapping(poll_ID, fake_ID):
+
+    try:
+        mapping=Mapping(poll_ID, fake_ID)
+        db.session.add(mapping)
         db.session.commit()
     except Exception as e:
         db.session.remove()
@@ -171,15 +192,55 @@ def delete_admin(username):
 
 
 @app.route('/init_poll/<question>/<answers>/<multiple_choice>', methods=['GET', 'POST'])
-def init_poll(question, answers, multiple_choice):
+def init_poll(chat_ID, question, answers, multiple_choice):
     try:
         answers = answers.split(',')
         answers = [a for a in answers if len(a) > 0]
         # in the future will need to send to the poll function a list of chat_id's
-        backend.telegram_bot.poll(5045706840, question, answers, multiple_choice)
+        backend.telegram_bot.poll(chat_ID, question, answers, multiple_choice)
     except Exception as e:
         raise e
     return {"result": True}
+
+@app.route('/send_poll_to_all/<question>/<answers>/<multiple_choice>', methods=['GET', 'POST'])
+def send_poll_to_all(question, answers, multiple_choice):
+    try:
+        answers = answers.split(',')
+        answers = [a for a in answers if len(a) > 0]
+        # in the future will need to send to the poll function a list of chat_id's
+        Result=db.session.query(Student).all()
+        chat_ID = []
+        for user in Result:
+            chat_ID.append(user.user_ID)
+        print(chat_ID)
+        backend.telegram_bot.poll(chat_ID, question, answers, multiple_choice)
+    except Exception as e:
+        db.session.remove()
+        raise e
+    return {"result": True}
+
+@app.route('/send_to_specific_voters/<question>/<answers>/<multiple_choice>', methods=['GET', 'POST'])
+def send_to_specific_voters(poll_id, answer, question, answers, multiple_choice):
+    try:
+        answers = answers.split(',')
+        answers = [a for a in answers if len(a) > 0]
+        # in the future will need to send to the poll function a list of chat_id's
+        Result=db.session.query(Polls_answers).filter(Polls_answers.poll_ID == poll_id).all()
+        chat_ID = []
+        for result in Result:
+            for ans in result.answers:
+                #ans is type string
+                if ans == answer:
+                    chat_ID.append(result.user_ID)
+        print(chat_ID)
+        if chat_ID:
+            backend.telegram_bot.poll(chat_ID, question, answers, multiple_choice)
+    except Exception as e:
+        db.session.remove()
+        raise e
+    return {"result": True}
+
+
 
 @app.route('/add_poll', methods=['GET', 'POST'])
 def add_poll(poll_id, question, answers, answers_counter, closed, multiple_choice,
@@ -197,9 +258,11 @@ def add_poll(poll_id, question, answers, answers_counter, closed, multiple_choic
 
 
 @app.route('/add_answer', methods=['GET', 'POST'])
-def add_answer(poll_id, user_id, answers, is_correct):
+def add_answer(fake_ID, user_id, answers, is_correct):
 
     try:
+        res=db.session.query(Mapping).filter(Mapping.fake_ID == fake_ID).first()
+        poll_id = res.poll_ID
         answer = Polls_answers(poll_id, user_id, answers, is_correct)
         db.session.add(answer)
         db.session.commit()
@@ -325,4 +388,7 @@ if __name__ == '__main__':  #python interpreter assigns "__main__" to the file y
     #all_users_data()
     #poll_answers("5967495296991625252")
     #specific_user_answers("5045706840")
+    #init_poll([5045706840, 1756044528], "asdas?", "fdsf , dfdf", True)
+    #send_poll_to_all("pika", "yes , no", False)
+    #send_to_specific_voters("5976421871120285710", "1", "Youuuu", "yes , no", False)
     app.run(debug=True)

@@ -39,20 +39,32 @@ logger = logging.getLogger(__name__)
 
 def poll(chat_id, question, answers, multiple_choice) -> None:
     """Sends a predefined poll"""
+
     message = Bot("5029169709:AAHvskSVaIUTmMDeJW-6XBoOzi-IC4naEjA").send_poll(
-        chat_id,
+        chat_id[0],
         question,
         answers,
         is_anonymous=False,
         allows_multiple_answers=multiple_choice,
     )
-    if multiple_choice:
+    if multiple_choice == "true":
         multiple_choice = 1
     else:
         multiple_choice = 0
     ans = [0 for a in answers]
     backend.app.add_poll(message.poll.id, question, answers, ans, 0, multiple_choice, 0, [], "")
-    # Save some info about the poll the bot_data for later use in receive_poll_answer
+    real_ID = message.poll.id
+    backend.app.add_mapping(real_ID, real_ID)
+    if len(chat_id)>1:
+        for i in range(1, len(chat_id)):
+            message = Bot("5029169709:AAHvskSVaIUTmMDeJW-6XBoOzi-IC4naEjA").send_poll(
+                chat_id[i],
+                question,
+                answers,
+                is_anonymous=False,
+                allows_multiple_answers=multiple_choice,
+            )
+            backend.app.add_mapping(real_ID, message.poll.id)
 
 
 
@@ -61,10 +73,10 @@ def receive_poll_answer(update: Update, context: CallbackContext) -> None:
     answer = update.poll_answer
     print("answer\n")
     print(answer)
-    poll_id = answer.poll_id
+    fake_ID = answer.poll_id
     chat_id = answer.user.id
     chosen_answer = answer.option_ids
-    backend.app.add_answer(poll_id, chat_id, chosen_answer, 1)
+    backend.app.add_answer(fake_ID, chat_id, chosen_answer, 1)
 
 
 
