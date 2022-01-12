@@ -6,11 +6,12 @@ import {useAppContext} from "../../../lib/contextLib";
 
 
 
-export const AllPollsTable = () => {
+export const AllPollsTable2 = () => {
 
     //const [data,setData] = useState([{id:1, name:"Dutchman", noOfRequest: 42}])
     const [data,setData] = useState([]);
     const {setPollData} = useAppContext();
+    const {setValue} = useAppContext();
     const columns=[
         {
             title: "poll_ID",
@@ -23,12 +24,10 @@ export const AllPollsTable = () => {
         {
             title: "answers",
             field: "answers",
-            headerSort:false,
         },
         {
             title: "answers_counter",
             field: "answers_counter",
-            headerSort:false,
         },
         {
             title: "multiple_choice",
@@ -69,6 +68,7 @@ export const AllPollsTable = () => {
     }
 
     function rowClicked(e, row){
+        setValue("default");
         setPollData(row.getData());
     }
 

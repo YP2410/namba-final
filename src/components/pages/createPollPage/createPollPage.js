@@ -3,6 +3,42 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./createPollPage.css"
 import {APIBase} from "../../../constAttributes";
+import {AppContext, useAppContext} from "../../../lib/contextLib";
+import {AllPollsTable2} from "./allPollsTable2";
+
+
+const AnswersToChooseFrom = (pollData) =>{
+    const {value, setValue} = useAppContext();
+    const {valueKey, setValueKey} = useAppContext();
+    let answers = pollData.value.answers;
+    let checks = [];
+    let count = answers.length;
+    for (let i = 0; i < count; i++) {
+        checks.push(<option key={i} data-key={i} value={answers[i]}> {answers[i]} </option>);
+    }
+
+
+    function handleChange(chosen_answer){
+        //console.log("change");
+        //console.log(chosen_answer);
+        setValue(chosen_answer.value);
+        //console.log(chosen_answer.value);
+        //console.log(chosen_answer.options.selectedIndex-1);
+        setValueKey(chosen_answer.options.selectedIndex-1);
+    }
+
+    return(
+        <>
+            <h4> Choose Answer</h4>
+            <select value={value} onChange={(e) => handleChange(e.target)}>
+                <option key={100} value="default" disabled>
+                    Choose Answer
+                </option>
+                {checks}
+            </select>
+        </>
+    );
+}
 
 
 const CreatePollPage = () => {
@@ -15,9 +51,25 @@ const CreatePollPage = () => {
     const [option4, setoption4] = useState("");
     const [multiple, setMultiple] = useState(false);
     const [toAll, setToAll] = useState(false);
-
+    const [toWho, setToWho] = useState("all");
+    const [pollData,setPollData] = useState(null);
+    const [value,setValue] = useState("default");
+    const [valueKey,setValueKey] = useState(null);
     function validateForm() {
-    return question.length > 0 && option1.length > 0 && option2.length > 0;
+    return question.length > 0 && option1.length > 0 && option2.length > 0
+        && ( toWho === "all" || (toWho!=="all" && value !== "default"));
+  }
+
+  function sendToWho(sendies) {
+        setToWho(sendies);
+        if (sendies === "all"){
+            alert("all");
+        }
+        else{
+            setPollData(null);
+            //alert("not all");
+        }
+      //console.log(sendies);
   }
 
     function handleSubmit(event){
@@ -25,10 +77,35 @@ const CreatePollPage = () => {
         //alert("Poll submitted!!")
         // init_poll: question, answers[]
         let answers = [option1, option2, option3, option4];
+        let question2 = question.replaceAll("?","%3F");
         //alert(multiple);
         //let data = {'question': question, 'answers': answers};
-        if (toAll) {
-            fetch(APIBase + "/send_poll_to_all/" + question + "/" + answers + "/" + multiple, {
+        if (toWho === "all") {
+            fetch(APIBase + "/send_poll_to_all/" + question2 + "/" + answers + "/" + multiple, {
+                method: 'POST',
+                mode: "cors",
+            })
+                .then(res => res.json())
+                .then(data => {
+                    //console.log(data);
+                    if (data.result === true) {
+                        alert("submitted successfully")
+                    }
+                })
+                .catch(e => {
+                    console.log(e);
+                    alert("error has occurred");
+                });
+        }
+        else {
+            let poll_id = pollData.poll_ID;
+            //console.log(row);
+            console.log(poll_id);
+            console.log(valueKey);
+            console.log(answers);
+            fetch(APIBase + "/send_to_specific_voters/" + poll_id + "/" + valueKey
+                + "/" + question + "/" + answers
+                + "/" + multiple, {
                 method: 'POST',
                 mode: "cors",
             })
@@ -46,6 +123,7 @@ const CreatePollPage = () => {
         }
 
     }
+
     return(
         <div className={"createPollPage"}>
             <h1>Create Poll Page</h1>
@@ -75,8 +153,22 @@ const CreatePollPage = () => {
                 <Form.Group size="lg" controlId="pollOption4">
                     <Form.Check label="multiple choice" checked={multiple} onChange={e => setMultiple(e.target.checked)}/>
                 </Form.Group>
-                <Form.Group size="lg" controlId="pollOption4">
+                <Form.Group size="lg" controlId="toAll">
                     <Form.Check label="send To All" checked={toAll} onChange={e => setToAll(e.target.checked)}/>
+                </Form.Group>
+                <Form.Group size="lg" controlId="sendToWho">
+                    <select value={toWho} onChange={(e) => sendToWho(e.target.value)}>
+                        <option value="all"> ALL </option>
+                        <option value="by poll"> by Poll results </option>
+                    </select>
+                </Form.Group>
+                <Form.Group size="lg" controlId="sendToWho">
+                    <AppContext.Provider value={{pollData, setPollData, value, setValue, valueKey, setValueKey}}>
+                        {toWho === "all" ? (<></>)
+                            : (<AllPollsTable2/>)}
+                        {toWho === "all" || pollData === null ? (<></>)
+                        : (<AnswersToChooseFrom value={pollData}/>)}
+                    </AppContext.Provider>
                 </Form.Group>
                 <Button className="custom-btn" type="submit" block size="lg" disabled={!validateForm()} > Submit Poll</Button>
             </Form>

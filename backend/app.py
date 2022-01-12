@@ -219,7 +219,8 @@ def send_poll_to_all(question, answers, multiple_choice):
         raise e
     return {"result": True}
 
-@app.route('/send_to_specific_voters/<question>/<answers>/<multiple_choice>', methods=['GET', 'POST'])
+
+@app.route('/send_to_specific_voters/<poll_id>/<answer>/<question>/<answers>/<multiple_choice>', methods=['GET', 'POST'])
 def send_to_specific_voters(poll_id, answer, question, answers, multiple_choice):
     try:
         answers = answers.split(',')
@@ -403,6 +404,6 @@ if __name__ == '__main__':  #python interpreter assigns "__main__" to the file y
     #poll_answers("5967495296991625252")
     #specific_user_answers("5045706840")
     #init_poll([5045706840, 1756044528], "asdas?", "fdsf , dfdf", True)
-    #send_poll_to_all("pika", "yes , no", False)
+    # send_poll_to_all("pika", "yes , no", False)
     #send_to_specific_voters("5976421871120285710", "1", "Youuuu", "yes , no", False)
     app.run(debug=True)
