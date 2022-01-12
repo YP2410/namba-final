@@ -50,7 +50,6 @@ const CreatePollPage = () => {
     const [option3, setoption3] = useState("");
     const [option4, setoption4] = useState("");
     const [multiple, setMultiple] = useState(false);
-    const [toAll, setToAll] = useState(false);
     const [toWho, setToWho] = useState("all");
     const [pollData,setPollData] = useState(null);
     const [value,setValue] = useState("default");
@@ -150,11 +149,8 @@ const CreatePollPage = () => {
                     <Form.Control placeholder="Option 4 (optional)" value={option4}
                                   onChange={(e) => setoption4(e.target.value)}/>
                 </Form.Group>
-                <Form.Group size="lg" controlId="pollOption4">
+                <Form.Group size="lg" controlId="multiple">
                     <Form.Check label="multiple choice" checked={multiple} onChange={e => setMultiple(e.target.checked)}/>
-                </Form.Group>
-                <Form.Group size="lg" controlId="toAll">
-                    <Form.Check label="send To All" checked={toAll} onChange={e => setToAll(e.target.checked)}/>
                 </Form.Group>
                 <Form.Group size="lg" controlId="sendToWho">
                     <select value={toWho} onChange={(e) => sendToWho(e.target.value)}>
@@ -162,16 +158,19 @@ const CreatePollPage = () => {
                         <option value="by poll"> by Poll results </option>
                     </select>
                 </Form.Group>
-                <Form.Group size="lg" controlId="sendToWho">
                     <AppContext.Provider value={{pollData, setPollData, value, setValue, valueKey, setValueKey}}>
                         {toWho === "all" ? (<></>)
                             : (<AllPollsTable2/>)}
                         {toWho === "all" || pollData === null ? (<></>)
                         : (<AnswersToChooseFrom value={pollData}/>)}
                     </AppContext.Provider>
+                <Form.Group size="lg" controlId="sendToWho">
+                    <Button className="custom-btn" type="submit" block size="lg" disabled={!validateForm()}> Submit
+                        Poll</Button>
                 </Form.Group>
-                <Button className="custom-btn" type="submit" block size="lg" disabled={!validateForm()} > Submit Poll</Button>
             </Form>
+            <Button className="custom-btn" type="submit" block size="lg" disabled={!validateForm()}> Submit
+                        Poll</Button>
         </div>
     )
 }

@@ -30,6 +30,25 @@ input[type=file] {
   width: 100%;
 }
 
+/*#ff7d1c*/
+/*#ffd51c*/
+.custom-btn:hover {
+  background-color: #ffd51c !important;
+  font-size: 22px !important;
+  border: #fff !important;
+  color: #000000 !important;
+  align-self: center;
+}
+
+.custom-btn:disabled, .custom-btn {
+  background-color: white !important;
+  font-size: 22px !important;
+  border: #fff !important;
+  color: #000000 !important;
+  width: 300px;
+  align-self: center;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

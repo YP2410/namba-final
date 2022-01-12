@@ -6,6 +6,9 @@ import {AllPollsTable} from "./allPollsTable";
 import { AppContext } from "../../../lib/contextLib";
 am4core.useTheme(am4themes_animated);
 
+const colors = ["#ffd51c","#1aeeb3","#ff7d1c" ,"#38d742"]
+const colors2 = ["#ffffff" ,"#000000","#72b4eb","#04417a"]
+
 export const PollsResultsPage = () => {
 
     const [pollData,setPollData] = useState(null);
@@ -15,7 +18,6 @@ export const PollsResultsPage = () => {
 
         if (pollData != null) {
             let x = am4core.create("chartdiv", am4charts.PieChart);
-
             let answers = pollData.answers;
             let answers_counter = pollData.answers_counter;
             //console.log(pollData);
@@ -46,10 +48,11 @@ export const PollsResultsPage = () => {
             for (let i = 0; i < count; i++){
                     lst.push({
                         "answer": answers[i],
-                        "votes": answers_counter[i]
+                        "votes": answers_counter[i],
+                        "color": am4core.color(colors2[i]),
                     });
                 }
-
+            pieSeries.slices.template.propertyFields.fill = "color";
             x.data = lst;
             console.log(x.data);
 
@@ -65,9 +68,8 @@ export const PollsResultsPage = () => {
     return(
         <>
             <AppContext.Provider value={{pollData, setPollData}}>
+                <h1> Choose a Poll to see graph</h1>
                 <AllPollsTable/>
-                {pollData != null ? (<h1> data!!</h1>)
-            : (<h1> no data...</h1>)}
                 <div id="chartdiv" style={{width: "80%", height: "500px"}}/>
             </AppContext.Provider>
         </>
