@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="454ce11f-7401-48b3-b881-14c43c598272" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/namba-final-project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/namba-final-project.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/pages/pollsResultsPage/pollsResultsPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/pollsResultsPage/pollsResultsPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/pollsResultsPage/allPollsTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/pollsResultsPage/allPollsTable.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +207,7 @@
       <workItem from="1641324260798" duration="9541000" />
       <workItem from="1641658256028" duration="12196000" />
       <workItem from="1641749947729" duration="3092000" />
-      <workItem from="1641766498603" duration="17752000" />
+      <workItem from="1641766498603" duration="18847000" />
     </task>
     <task id="LOCAL-00001" summary="flask is integrated with postgresql">
       <created>1640695155934</created>
@@ -350,7 +349,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641932895252</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="changed to pie chart">
+      <created>1641995267806</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1641995267806</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -418,7 +424,8 @@
     <MESSAGE value="#function that receives user_ID and returns dict of poll_ID's and the specific user answers to the polls" />
     <MESSAGE value="functions for sending to all users, and specific voters" />
     <MESSAGE value="added mapping table and functions to utilize it" />
-    <option name="LAST_COMMIT_MESSAGE" value="added mapping table and functions to utilize it" />
+    <MESSAGE value="changed to pie chart" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed to pie chart" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Final_Project$app.coverage" NAME="app Coverage Results" MODIFIED="1640790330902" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

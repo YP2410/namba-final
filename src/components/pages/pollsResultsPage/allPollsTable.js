@@ -24,10 +24,12 @@ export const AllPollsTable = () => {
         {
             title: "answers",
             field: "answers",
+            headerSort:false,
         },
         {
             title: "answers_counter",
             field: "answers_counter",
+            headerSort:false,
         },
         {
             title: "multiple_choice",
