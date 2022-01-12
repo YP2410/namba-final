@@ -14,7 +14,7 @@ export const PollsResultsPage = () => {
     useLayoutEffect(() => {
 
         if (pollData != null) {
-            let x = am4core.create("chartdiv", am4charts.XYChart);
+            let x = am4core.create("chartdiv", am4charts.PieChart);
 
             let answers = pollData.answers;
             let answers_counter = pollData.answers_counter;
@@ -22,20 +22,24 @@ export const PollsResultsPage = () => {
             //console.log(answers);
             //console.log(answers_counter);
 
-            let categoryAxis = x.xAxes.push(new am4charts.CategoryAxis());
+            /*let categoryAxis = x.xAxes.push(new am4charts.CategoryAxis());
             categoryAxis.dataFields.category = "answer";
             categoryAxis.title.text = "Answers";
 
             let valueAxis = x.yAxes.push(new am4charts.ValueAxis());
-            valueAxis.title.text = "Votes";
+            valueAxis.title.text = "Votes";*/
 
 
-            let series = x.series.push(new am4charts.ColumnSeries());
-            series.name = "votes";
+            //let series = x.series.push(new am4charts.ColumnSeries());
+            //series.name = "votes";
+            let pieSeries = x.series.push(new am4charts.PieSeries());
+            pieSeries.dataFields.value = "votes";
+            pieSeries.dataFields.category = "answer";
             //series.columns.template.tooltipText = "Series: {name}\nCategory: {categoryX}\nValue: {valueY}";
+            /*
             series.columns.template.fill = am4core.color("#4cd20c"); // fill
             series.dataFields.valueY = "votes";
-            series.dataFields.categoryX = "answer";
+            series.dataFields.categoryX = "answer";*/
 
             let count = Object.keys(answers).length;
             let lst = [];
