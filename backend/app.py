@@ -332,15 +332,17 @@ def all_polls_data():
 
 @app.route('/all_users_data', methods=['GET', 'POST'])
 def all_users_data():
-    users = [
-    ]
+    users = {}
+
     try:
         Result=db.session.query(Student).all()
+        i = 0
         for user in Result:
-            users.append({
+            users[i] = {
                 "user_ID": user.user_ID,
-                "name":user.name
-            })
+                "name": user.name
+            }
+            i += 1
 
     except Exception as e:
         db.session.remove()

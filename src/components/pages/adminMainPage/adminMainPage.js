@@ -22,6 +22,11 @@ export const AdminMainPage = () => {
     navigate(path);
   }
 
+    const routeChangeToUsersPage = () =>{
+        let path = `/usersPage`;
+        navigate(path);
+    }
+
     return(
         <>
             <div className={"adminMainPage"}>
@@ -31,6 +36,8 @@ export const AdminMainPage = () => {
                 <Button className="custom-btn" onClick={routeChangeToPollResults} > See polls results </Button>
                 <br></br>
                 <Button className="custom-btn" onClick={routeChangeToAddAdmin} > Add an admin </Button>
+                <br></br>
+                <Button className="custom-btn" onClick={routeChangeToUsersPage} > See users </Button>
             </div>
         </>
     )
