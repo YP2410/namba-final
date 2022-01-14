@@ -403,7 +403,7 @@ if __name__ == '__main__':  #python interpreter assigns "__main__" to the file y
     #all_users_data()
     #poll_answers("5967495296991625252")
     #specific_user_answers("5045706840")
-    #init_poll([5045706840, 1756044528], "asdas?", "fdsf , dfdf", True)
+    #init_poll([5045706840], "asdas?", "fdsf , dfdf, 1, 2", True)
     # send_poll_to_all("pika", "yes , no", False)
     #send_to_specific_voters("5976421871120285710", "1", "Youuuu", "yes , no", False)
     app.run(debug=True)

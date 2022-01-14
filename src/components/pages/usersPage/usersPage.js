@@ -4,12 +4,16 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import {AllUsersTable} from "./allUsersTable";
 import { AppContext } from "../../../lib/contextLib";
+import {AllVotesTable} from "./allVotesTable";
 am4core.useTheme(am4themes_animated);
 
 export const UsersPage = () => {
 
     const [userData,setUserData] = useState(null);
-
+    if (userData != null) {
+        console.log(userData.name)
+        console.log(userData.user_ID)
+    }
     /*const chart = useRef(null);
     useLayoutEffect(() => {
 
@@ -67,8 +71,8 @@ export const UsersPage = () => {
         <>
             <AppContext.Provider value={{userData, setUserData}}>
                 <AllUsersTable/>
-                {userData != null ? (<h1> data!!</h1>)
-                    : (<h1> no data...</h1>)}
+                {userData == null ?  (<></>)
+                    : (<AllVotesTable   dataFromParent = {userData}   />)}
 
             </AppContext.Provider>
         </>
