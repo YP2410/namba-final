@@ -33,23 +33,26 @@ const AddAdminPage = () => {
     }
 
 return(
-    <div className = "AddAdminForm">
+    <div className="AddAdminForm">
         <h1> Add a new admin</h1>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group size="lg" controlId="username">
+        <Form onSubmit={handleSubmit}>
+            <Form.Group size="lg" controlId="username">
                 <Form.Label>Name</Form.Label>
-                    <Form.Control type="username"  placeholder="Enter username" value={username}
-                           onChange={(e) => setUsername(e.target.value)}/>
-                    </Form.Group>
-                <Form.Group size="lg" controlId="password">
+                <Form.Control type="username" placeholder="Enter username" value={username}
+                              onChange={(e) => setUsername(e.target.value)}/>
+            </Form.Group>
+            <Form.Group size="lg" controlId="password">
                 <Form.Label>Password:</Form.Label>
-                    <Form.Control type="password"  placeholder="Enter password" value={password}
-                           onChange={(e) => setPassword(e.target.value)}/>
+                <Form.Control type="password" placeholder="Enter password" value={password}
+                              onChange={(e) => setPassword(e.target.value)}/>
 
-                     </Form.Group>
-                <Button className="custom-btn" type="submit" block size="lg" disabled={!validateForm()} > Add Admin</Button>
-            </Form>
-        </div>
+            </Form.Group>
+            <div className={"longShot"}>
+                <Button className="custom-btn" type="submit" block size="lg" disabled={!validateForm()}> Add
+                    Admin</Button>
+            </div>
+        </Form>
+    </div>
     );
 
 
