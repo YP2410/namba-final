@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, send_from_directory, jsonify
+from flask_login import LoginManager, UserMixin, login_required
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from flask_cors import CORS, cross_origin
@@ -13,6 +14,10 @@ CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:porat2410@localhost/Namba'
 
 db=SQLAlchemy(app)
+
+login_manager = LoginManager()
+app.secret_key = b'TheFlyingDutchman\n\xec]/'
+
 
 class Student(db.Model):
     __tablename__='users'
@@ -53,11 +58,17 @@ class MutableList(Mutable, list):
 
 
 
-class Admins(db.Model):
+class Admins(db.Model, UserMixin):
     __tablename__='admins'
+
     Username=db.Column(db.String(40),primary_key=True)
     Password=db.Column(db.String(150))
-    def __init__(self,username, password):
+
+    '''id = db.Column(db.Integer, primary_key=True)
+    Username = db.Column(db.String(40), nullable=False, unique=True)
+    Password = db.Column(db.String(150), nullable=False, server_default='')
+    active = db.Column(db.Boolean(), nullable=False, server_default='0')'''
+    def __init__(self, username, password):
         self.Username = username
         self.Password = password
 
@@ -407,3 +418,4 @@ if __name__ == '__main__':  #python interpreter assigns "__main__" to the file y
     # send_poll_to_all("pika", "yes , no", False)
     #send_to_specific_voters("5976421871120285710", "1", "Youuuu", "yes , no", False)
     app.run(debug=True)
+    login_manager.init_app(app)

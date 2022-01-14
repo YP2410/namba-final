@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Navbar from "react-bootstrap/Navbar";
 import { AppContext } from "./lib/contextLib";
 import RoutesInApp from "./RoutesInApp";
@@ -17,6 +17,11 @@ import RoutesInApp from "./RoutesInApp";
 
 function App() {
     const [isAuthenticated, userHasAuthenticated] = useState(false);
+    useEffect(() => {
+        // TODO: add a check for auth session
+        //alert(isAuthenticated)
+    }, [isAuthenticated]);
+
     return (
         <div className="App">
             <header className="App-header">
