@@ -37,6 +37,8 @@ input[type=file] {
   font-size: 22px !important;
   border: #fff !important;
   color: #000000 !important;
+  width: 250px;
+  margin: 5px;
   align-self: center;
 }
 
@@ -45,7 +47,8 @@ input[type=file] {
   font-size: 22px !important;
   border: #fff !important;
   color: #000000 !important;
-  width: 300px;
+  width: 250px;
+  margin: 5px;
   align-self: center;
 }
 

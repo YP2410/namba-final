@@ -164,13 +164,12 @@ const CreatePollPage = () => {
                         {toWho === "all" || pollData === null ? (<></>)
                         : (<AnswersToChooseFrom value={pollData}/>)}
                     </AppContext.Provider>
-                <Form.Group size="lg" controlId="sendToWho">
-                    <Button className="custom-btn" type="submit" block size="lg" disabled={!validateForm()}> Submit
+                <div className={"longShot"}>
+                    <Button className="custom-btn" type="submit" block size="lg" disabled={!validateForm()}
+                            alignment="center"> Submit
                         Poll</Button>
-                </Form.Group>
+                </div>
             </Form>
-            <Button className="custom-btn" type="submit" block size="lg" disabled={!validateForm()}> Submit
-                        Poll</Button>
         </div>
     )
 }
