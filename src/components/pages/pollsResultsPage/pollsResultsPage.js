@@ -70,7 +70,7 @@ export const PollsResultsPage = () => {
             <AppContext.Provider value={{pollData, setPollData}}>
                 <h1> Choose a Poll to see graph</h1>
                 <AllPollsTable/>
-                <div id="chartdiv" style={{width: "80%", height: "500px"}}/>
+                <div id="chartdiv" style={{width: "100%", height: "500px"}}/>
             </AppContext.Provider>
         </>
     )
