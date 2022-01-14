@@ -31,7 +31,6 @@ export const AllVotesTable = () => {
 
 
     function getData() {
-
         fetch(APIBase + "/specific_user_answers/" + userData.user_ID,{method: 'GET', mode: "cors"})
             .then(res => res.json())
             .then(data => {
@@ -64,7 +63,7 @@ export const AllVotesTable = () => {
     useEffect(()=>{
         //console.log("use Effect is on");
         getData();
-    },[])
+    },[userData])
 
     const options = {
         height: '100%',

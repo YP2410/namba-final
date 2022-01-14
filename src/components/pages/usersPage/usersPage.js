@@ -72,7 +72,7 @@ export const UsersPage = () => {
             <AppContext.Provider value={{userData, setUserData}}>
                 <AllUsersTable/>
                 {userData == null ?  (<></>)
-                    : (<AllVotesTable   dataFromParent = {userData}   />)}
+                    : (<AllVotesTable />)}
 
             </AppContext.Provider>
         </>
