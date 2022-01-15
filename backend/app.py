@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from flask_cors import CORS, cross_origin
 from werkzeug.security import generate_password_hash, check_password_hash
+import sqlalchemy.exc
 from sqlalchemy.ext.mutable import Mutable
 from sqlalchemy.dialects.postgresql import ARRAY
 import backend.telegram_bot
@@ -17,22 +18,22 @@ CORS(app, supports_credentials=True)
 # app.config['SECRET_KEY'] = 'TheFlyingDutchman\n\xec]/'
 server_session = Session()
 server_session.init_app(app)
-db=SQLAlchemy(app)
-
-
+db = SQLAlchemy(app)
 
 
 class Student(db.Model):
-    __tablename__='users'
-    user_ID=db.Column(db.String(40), primary_key=True)
-    name=db.Column(db.String(40))
-    def __init__(self,username, name):
-        self.user_ID=username
+    __tablename__ = 'users'
+    user_ID = db.Column(db.String(40), primary_key=True)
+    name = db.Column(db.String(40))
+
+    def __init__(self, username, name):
+        self.user_ID = username
         self.name = name
 
+
 class Poll_ID(db.Model):
-    __tablename__='poll_id'
-    poll_ID=db.Column(db.Integer,primary_key=True)
+    __tablename__ = 'poll_id'
+    poll_ID = db.Column(db.Integer, primary_key=True)
 
     def __init__(self):
         self.poll_ID = 0
@@ -60,34 +61,34 @@ class MutableList(Mutable, list):
         self.__setitem__(key, value)
 
 
-
 class Admins(db.Model):
-    __tablename__='admins'
+    __tablename__ = 'admins'
 
-    id=db.Column(db.String(40), primary_key=True)
-    Password=db.Column(db.String(150))
+    id = db.Column(db.String(40), primary_key=True)
+    Password = db.Column(db.String(150))
     '''id = db.Column(db.Integer, primary_key=True)
     Username = db.Column(db.String(40), nullable=False, unique=True)
     Password = db.Column(db.String(150), nullable=False, server_default='')
     active = db.Column(db.Boolean(), nullable=False, server_default='0')'''
+
     def __init__(self, username, password):
         self.id = username
         self.Password = password
 
 
 class Polls(db.Model):
-    __tablename__='polls'
-    poll_ID=db.Column(db.String(40),primary_key=True)
-    question=db.Column(db.String(255))
+    __tablename__ = 'polls'
+    poll_ID = db.Column(db.String(40), primary_key=True)
+    question = db.Column(db.String(255))
     answers = db.Column(db.ARRAY(db.String(100)))
     answers_counter = db.Column(MutableList.as_mutable(ARRAY(db.Integer)))
     closed = db.Column(db.BOOLEAN)
     multiple_choice = db.Column(db.BOOLEAN)
     quiz = db.Column(db.BOOLEAN)
     correct_answers = db.Column(db.ARRAY(db.Integer))
-    solution=db.Column(db.String(255))
+    solution = db.Column(db.String(255))
 
-    def __init__(self,poll_ID, question, answers, answers_counter, closed, multiple_choice,
+    def __init__(self, poll_ID, question, answers, answers_counter, closed, multiple_choice,
                  quiz, correct_answers, solution):
         self.poll_ID = poll_ID
         self.question = question
@@ -99,24 +100,25 @@ class Polls(db.Model):
         self.correct_answers = correct_answers
         self.solution = solution
 
-class Mapping(db.Model):
-    __tablename__='mapping'
-    poll_ID=db.Column(db.String(40), ForeignKey(Polls.poll_ID) ,primary_key=True)
-    fake_ID=db.Column(db.String(40),primary_key=True)
 
-    def __init__(self,poll_ID, fake_ID):
+class Mapping(db.Model):
+    __tablename__ = 'mapping'
+    poll_ID = db.Column(db.String(40), ForeignKey(Polls.poll_ID), primary_key=True)
+    fake_ID = db.Column(db.String(40), primary_key=True)
+
+    def __init__(self, poll_ID, fake_ID):
         self.poll_ID = poll_ID
         self.fake_ID = fake_ID
 
 
 class Polls_answers(db.Model):
-    __tablename__='polls_answers'
-    poll_ID=db.Column(db.String(40), ForeignKey(Polls.poll_ID) ,primary_key=True)
-    user_ID=db.Column(db.String(150), ForeignKey(Student.user_ID) ,primary_key=True)
+    __tablename__ = 'polls_answers'
+    poll_ID = db.Column(db.String(40), ForeignKey(Polls.poll_ID), primary_key=True)
+    user_ID = db.Column(db.String(150), ForeignKey(Student.user_ID), primary_key=True)
     answers = db.Column(db.ARRAY(db.String(100)))
     is_correct = db.Column(db.BOOLEAN)
 
-    def __init__(self,poll_ID, user_ID, answers, is_correct):
+    def __init__(self, poll_ID, user_ID, answers, is_correct):
         self.poll_ID = poll_ID
         self.user_ID = user_ID
         self.answers = answers
@@ -127,18 +129,22 @@ class Polls_answers(db.Model):
 def load_user(username):
     return Admins.get(username)'''
 
+
 @app.route('/')
 def index():
     return render_template("index.html")
     # return send_from_directory(app.static_folder, 'build/index.html')
     # return 1234
 
+
 @app.route('/mes', methods=['GET'])
 def message():
-    #print("got to flask")
+    # print("got to flask")
     # return render_template("index.html")
     # return send_from_directory(app.static_folder, 'build/index.html')
     return {'message': '1234'}
+
+
 '''
 @app.route('/init_pollID', methods=['POST'])
 def init_pollID():
@@ -154,25 +160,25 @@ def init_pollID():
 
 @app.route('/submit', methods=['POST'])
 def submit(id, name):
-
     try:
-        student=Student(id, name)
+        student = Student(id, name)
         db.session.add(student)
         db.session.commit()
     except Exception as e:
         db.session.remove()
         raise e
 
+
 @app.route('/add_mapping', methods=['POST'])
 def add_mapping(poll_ID, fake_ID):
-
     try:
-        mapping=Mapping(poll_ID, fake_ID)
+        mapping = Mapping(poll_ID, fake_ID)
         db.session.add(mapping)
         db.session.commit()
     except Exception as e:
         db.session.remove()
         raise e
+
 
 @app.route('/delete', methods=['POST'])
 def delete(id):
@@ -186,7 +192,6 @@ def delete(id):
 
 @app.route('/add_admin/<username>/<password>', methods=['POST'])
 def add_admin(username, password):
-
     try:
         hashed_password = generate_password_hash(password)
         admin = Admins(username, hashed_password)
@@ -194,7 +199,10 @@ def add_admin(username, password):
         db.session.commit()
     except Exception as e:
         db.session.remove()
-        raise e
+        # print("exception")
+        if (type(e) is sqlalchemy.exc.IntegrityError):
+            return {"result": "This username is already registered to the system."}
+        return {"result": "Error occurred"}
     return {"result": True}
 
 
@@ -219,13 +227,14 @@ def init_poll(chat_ID, question, answers, multiple_choice):
         raise e
     return {"result": True}
 
+
 @app.route('/send_poll_to_all/<question>/<answers>/<multiple_choice>', methods=['GET', 'POST'])
 def send_poll_to_all(question, answers, multiple_choice):
     try:
         answers = answers.split(',')
         answers = [a for a in answers if len(a) > 0]
         # in the future will need to send to the poll function a list of chat_id's
-        Result=db.session.query(Student).all()
+        Result = db.session.query(Student).all()
         chat_ID = []
         for user in Result:
             chat_ID.append(user.user_ID)
@@ -237,17 +246,18 @@ def send_poll_to_all(question, answers, multiple_choice):
     return {"result": True}
 
 
-@app.route('/send_to_specific_voters/<poll_id>/<answer>/<question>/<answers>/<multiple_choice>', methods=['GET', 'POST'])
+@app.route('/send_to_specific_voters/<poll_id>/<answer>/<question>/<answers>/<multiple_choice>',
+           methods=['GET', 'POST'])
 def send_to_specific_voters(poll_id, answer, question, answers, multiple_choice):
     try:
         answers = answers.split(',')
         answers = [a for a in answers if len(a) > 0]
         # in the future will need to send to the poll function a list of chat_id's
-        Result=db.session.query(Polls_answers).filter(Polls_answers.poll_ID == poll_id).all()
+        Result = db.session.query(Polls_answers).filter(Polls_answers.poll_ID == poll_id).all()
         chat_ID = []
         for result in Result:
             for ans in result.answers:
-                #ans is type string
+                # ans is type string
                 if ans == answer:
                     chat_ID.append(result.user_ID)
         print(chat_ID)
@@ -259,11 +269,9 @@ def send_to_specific_voters(poll_id, answer, question, answers, multiple_choice)
     return {"result": True}
 
 
-
 @app.route('/add_poll', methods=['GET', 'POST'])
 def add_poll(poll_id, question, answers, answers_counter, closed, multiple_choice,
              quiz, correct_answers, solution):
-
     try:
         poll = Polls(poll_id, question, answers, answers_counter, closed, multiple_choice,
                      quiz, correct_answers, solution)
@@ -274,18 +282,16 @@ def add_poll(poll_id, question, answers, answers_counter, closed, multiple_choic
         raise e
 
 
-
 @app.route('/add_answer', methods=['GET', 'POST'])
 def add_answer(fake_ID, user_id, answers, is_correct):
-
     try:
-        res=db.session.query(Mapping).filter(Mapping.fake_ID == fake_ID).first()
+        res = db.session.query(Mapping).filter(Mapping.fake_ID == fake_ID).first()
         poll_id = res.poll_ID
         answer = Polls_answers(poll_id, user_id, answers, is_correct)
         db.session.add(answer)
         db.session.commit()
-        #add code for adding an answer to the answers_counter
-        Result=db.session.query(Polls).filter(Polls.poll_ID == poll_id).first()
+        # add code for adding an answer to the answers_counter
+        Result = db.session.query(Polls).filter(Polls.poll_ID == poll_id).first()
         for a in answers:
             counter = Result.answers_counter[a] + 1
             Result.answers_counter.updateItem(a, counter)
@@ -305,10 +311,11 @@ def delete_poll(poll_id):
         db.session.remove()
         raise e
 
+
 @app.route('/auth_admin/<username>/<password>', methods=['GET', 'POST'])
 def auth_admin(username, password):
     try:
-        Result=db.session.query(Admins).filter(Admins.id == username)
+        Result = db.session.query(Admins).filter(Admins.id == username)
         hashed_password = Result[0].Password
     except Exception as e:
         print("Exception is " + str(e))
@@ -330,11 +337,11 @@ def get_current_user():
     # print(user_id)
     return {"result": user_id}
 
+
 @app.route("/logout", methods=['GET', 'POST'])
 def logout_user():
     session["user_id"] = None
     return {"result": True}
-
 
 
 @app.route('/generate_hash')
@@ -370,12 +377,13 @@ def all_polls_data():
     # print(len(polls))
     return polls
 
+
 @app.route('/all_users_data', methods=['GET', 'POST'])
 def all_users_data():
     users = {}
 
     try:
-        Result=db.session.query(Student).all()
+        Result = db.session.query(Student).all()
         i = 0
         for user in Result:
             users[i] = {
@@ -389,17 +397,19 @@ def all_users_data():
         raise e
     print(users)
     return users
-#function that receives poll_ID and returns dict of answer and number of votes it got
+
+
+# function that receives poll_ID and returns dict of answer and number of votes it got
 @app.route('/poll_answers/<poll_id>', methods=['GET', 'POST'])
 def poll_answers(poll_id):
     answers = {}
     try:
-        Result=db.session.query(Polls).filter(Polls.poll_ID == poll_id).first()
+        Result = db.session.query(Polls).filter(Polls.poll_ID == poll_id).first()
 
         for i in range(len(Result.answers)):
-          key = Result.answers[i]
-          value = Result.answers_counter[i]
-          answers[key] = value
+            key = Result.answers[i]
+            value = Result.answers_counter[i]
+            answers[key] = value
 
 
     except Exception as e:
@@ -408,18 +418,19 @@ def poll_answers(poll_id):
     print(answers)
     return answers
 
-#function that receives user_ID and returns dict of poll_ID's and the specific user answers to the polls
+
+# function that receives user_ID and returns dict of poll_ID's and the specific user answers to the polls
 @app.route('/specific_user_answers/<user_id>', methods=['GET', 'POST'])
 def specific_user_answers(user_id):
-    #poll_id, question, his answer
+    # poll_id, question, his answer
     data = {}
     try:
-        Result=db.session.query(Polls_answers).filter(Polls_answers.user_ID == user_id).all()
-        i=0
+        Result = db.session.query(Polls_answers).filter(Polls_answers.user_ID == user_id).all()
+        i = 0
         for res in Result:
             poll_id = res.poll_ID
             votes = res.answers
-            Comeback=db.session.query(Polls).filter(Polls.poll_ID == poll_id).first()
+            Comeback = db.session.query(Polls).filter(Polls.poll_ID == poll_id).first()
             question = Comeback.question
             text_answers = []
             for ans in votes:
@@ -438,12 +449,13 @@ def specific_user_answers(user_id):
     print(data)
     return data
 
-if __name__ == '__main__':  #python interpreter assigns "__main__" to the file you run
-    #all_users_data()
-    #poll_answers("5967495296991625252")
-    #specific_user_answers("5045706840")
-    #init_poll([5045706840], "asdas?", "fdsf , dfdf, 1, 2", True)
+
+if __name__ == '__main__':  # python interpreter assigns "__main__" to the file you run
+    # all_users_data()
+    # poll_answers("5967495296991625252")
+    # specific_user_answers("5045706840")
+    # init_poll([5045706840], "asdas?", "fdsf , dfdf, 1, 2", True)
     # send_poll_to_all("pika", "yes , no", False)
-    #send_to_specific_voters("5976421871120285710", "1", "Youuuu", "yes , no", False)
+    # send_to_specific_voters("5976421871120285710", "1", "Youuuu", "yes , no", False)
     # add_admin(username="daniel", password="12321")
     app.run(debug=True)

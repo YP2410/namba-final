@@ -22,7 +22,7 @@ const AddAdminPage = () => {
                     alert("Admin added!!")
                 }
                 else{
-                    alert("Can't add admin");
+                    alert("Can't add admin\n" + data.result);
                 }
             })
             .catch(e => {
