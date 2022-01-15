@@ -5,12 +5,14 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./adminSignInForm.css"
 import httpClient from "../../../httpClient"
+import { useNavigate } from "react-router-dom";
 
 
 export const AdminSignInForm = () => {
     const { userHasAuthenticated } = useAppContext();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     function validateForm() {
     return username.length > 0 && password.length > 0;
@@ -23,6 +25,8 @@ export const AdminSignInForm = () => {
             .then( res => {
                 console.log(res);
                 if (res["data"]["result"] === true){
+                    let path = "/main";
+                    navigate(path);
                     userHasAuthenticated(true);
                 }else{
                     alert("User and/or password is not correct");

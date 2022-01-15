@@ -23,6 +23,7 @@ function App() {
     const [isAuthenticated, userHasAuthenticated] = useState(false);
     const [isAuthenticating, userIsAuthenticating] = useState(false);
     const navigate = useNavigate();
+    const pathname = window.location.pathname
 
     function logOut(){
         httpClient.get(APIBase + "/logout").then(r => console.log(r));
@@ -52,9 +53,11 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <Button className="logout-btn" onClick={ () => logOut()}>
+                {pathname === "/" ? (<></>)
+                : (<Button className="logout-btn" onClick={ () => logOut()}>
                     LOGOUT
-                </Button>
+                </Button>)}
+
                 <AppContext.Provider value={{isAuthenticated, userHasAuthenticated, isAuthenticating, userIsAuthenticating}}>
                     <RoutesInApp/>
                 </AppContext.Provider>
