@@ -32,6 +32,10 @@ function App() {
         navigate(path);
     }
 
+    let sleep = (milliseconds) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+    }
+
     useEffect(() => {
         // TODO: add a check for auth session
         //alert(isAuthenticated)
@@ -46,6 +50,12 @@ function App() {
                         userHasAuthenticated(true)
                     }
                     userIsAuthenticating(false)
+                })
+                .catch(e => {
+                    console.log(e);
+                    sleep(3000).then( r => {
+                        window.location.reload();
+                    })
                 });
         }
     }, []);
