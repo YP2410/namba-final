@@ -25,6 +25,7 @@ export const AllVotesTable = () => {
         {
             title: "answers",
             field: "answers",
+            headerSort:false,
         },
     ]
 

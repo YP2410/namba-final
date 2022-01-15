@@ -15,10 +15,12 @@ export const AllPollsTable = () => {
         {
             title: "poll_ID",
             field: "poll_ID",
+            headerFilter: true
         },
         {
             title: "question",
             field: "question",
+            headerFilter: true
         },
         {
             title: "answers",
