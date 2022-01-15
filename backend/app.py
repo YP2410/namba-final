@@ -16,9 +16,12 @@ CORS(app, supports_credentials=True)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:porat2410@localhost/Namba'
 # app.config['SESSION_TYPE'] = 'memcached'
 # app.config['SECRET_KEY'] = 'TheFlyingDutchman\n\xec]/'
-server_session = Session()
+server_session = Session(app)
 server_session.init_app(app)
 db = SQLAlchemy(app)
+app.config['SESSION_SQLALCHEMY'] = db
+server_session.app.session_interface.db.create_all()
+
 
 
 class Student(db.Model):
@@ -124,6 +127,18 @@ class Polls_answers(db.Model):
         self.answers = answers
         self.is_correct = is_correct
 
+class Sessions(db.Model):
+    __tablename__ = 'sessions'
+    id = db.Column(db.Integer, primary_key=True)
+    session_id = db.Column(db.String(20))
+    data = db.Column(db.String(50))
+    expiry = db.Column(db.Date)
+
+    def __init__(self, id, session_id, data, expiry):
+        self.id = id
+        self.session_id = session_id
+        self.data = data
+        self.expiry = expiry
 
 '''@login_manager.user_loader
 def load_user(username):
@@ -345,7 +360,7 @@ def get_current_user():
 
 @app.route("/logout", methods=['GET', 'POST'])
 def logout_user():
-    session["user_id"] = None
+    del session[1]
     return {"result": True}
 
 
