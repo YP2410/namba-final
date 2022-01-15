@@ -20,6 +20,7 @@ export const AllUsersTable = () => {
         {
             title: "name",
             field: "name",
+            headerFilter: true
         },
     ]
 
