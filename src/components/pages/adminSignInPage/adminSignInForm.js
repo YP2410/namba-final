@@ -22,7 +22,15 @@ export const AdminSignInForm = () => {
         httpClient.post(APIBase + "/auth_admin/" + username + "/" + password,{mode: "cors"})
             .then( res => {
                 console.log(res);
-                userHasAuthenticated(true);
+                if (res["data"]["result"] === true){
+                    userHasAuthenticated(true);
+                }else{
+                    alert("User and/or password is not correct");
+                }
+
+            })
+            .catch(e => {
+                alert("An error as occurred");
             });
         /*httpClient.get(APIBase + "/cookie")
             .then(res => {
