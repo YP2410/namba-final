@@ -1,22 +1,25 @@
-from flask import Flask, render_template, request, send_from_directory, jsonify
-from flask_login import LoginManager, UserMixin, login_required
+from flask import Flask, render_template, request, send_from_directory, jsonify, session
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from flask_cors import CORS, cross_origin
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.ext.mutable import Mutable
 from sqlalchemy.dialects.postgresql import ARRAY
-import json
 import backend.telegram_bot
+from backend.config import ApplicationConfig
 
 app = Flask(__name__)
-CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:porat2410@localhost/Namba'
-
+app.config.from_object(ApplicationConfig)
+CORS(app, supports_credentials=True)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:porat2410@localhost/Namba'
+# app.config['SESSION_TYPE'] = 'memcached'
+# app.config['SECRET_KEY'] = 'TheFlyingDutchman\n\xec]/'
+server_session = Session()
+server_session.init_app(app)
 db=SQLAlchemy(app)
 
-login_manager = LoginManager()
-app.secret_key = b'TheFlyingDutchman\n\xec]/'
+
 
 
 class Student(db.Model):
@@ -58,18 +61,17 @@ class MutableList(Mutable, list):
 
 
 
-class Admins(db.Model, UserMixin):
+class Admins(db.Model):
     __tablename__='admins'
 
-    Username=db.Column(db.String(40),primary_key=True)
+    id=db.Column(db.String(40), primary_key=True)
     Password=db.Column(db.String(150))
-
     '''id = db.Column(db.Integer, primary_key=True)
     Username = db.Column(db.String(40), nullable=False, unique=True)
     Password = db.Column(db.String(150), nullable=False, server_default='')
     active = db.Column(db.Boolean(), nullable=False, server_default='0')'''
     def __init__(self, username, password):
-        self.Username = username
+        self.id = username
         self.Password = password
 
 
@@ -120,6 +122,10 @@ class Polls_answers(db.Model):
         self.answers = answers
         self.is_correct = is_correct
 
+
+'''@login_manager.user_loader
+def load_user(username):
+    return Admins.get(username)'''
 
 @app.route('/')
 def index():
@@ -302,12 +308,34 @@ def delete_poll(poll_id):
 @app.route('/auth_admin/<username>/<password>', methods=['GET', 'POST'])
 def auth_admin(username, password):
     try:
-        Result=db.session.query(Admins).filter(Admins.Username == username)
+        Result=db.session.query(Admins).filter(Admins.id == username)
         hashed_password = Result[0].Password
     except Exception as e:
         print("Exception is " + str(e))
         return {"result": False}
-    return {"result": check_password_hash(hashed_password, password)}
+    flag = check_password_hash(hashed_password, password)
+    if flag:
+        # flask_login.login_user(Result[0])
+        session["user_id"] = (Result[0].id + Result[0].Password)
+        # user_id = session.get("user_id")
+        # print(user_id)
+        return jsonify({"result": True})
+    else:
+        return {"result": False}
+
+
+@app.route("/cookie", methods=['GET', 'POST'])
+def get_current_user():
+    user_id = session.get("user_id")
+    # print(user_id)
+    return {"result": user_id}
+
+@app.route("/logout", methods=['GET', 'POST'])
+def logout_user():
+    session["user_id"] = None
+    return {"result": True}
+
+
 
 @app.route('/generate_hash')
 def generate_hash(incoming_password):
@@ -417,5 +445,5 @@ if __name__ == '__main__':  #python interpreter assigns "__main__" to the file y
     #init_poll([5045706840], "asdas?", "fdsf , dfdf, 1, 2", True)
     # send_poll_to_all("pika", "yes , no", False)
     #send_to_specific_voters("5976421871120285710", "1", "Youuuu", "yes , no", False)
+    # add_admin(username="daniel", password="12321")
     app.run(debug=True)
-    login_manager.init_app(app)

@@ -4,6 +4,7 @@ import {useAppContext} from "../../../lib/contextLib";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./adminSignInForm.css"
+import httpClient from "../../../httpClient"
 
 
 export const AdminSignInForm = () => {
@@ -18,18 +19,41 @@ export const AdminSignInForm = () => {
     function handleSubmit(event) {
         event.preventDefault();
         //alert("submitted")
-        fetch(APIBase + "/auth_admin/" + username + "/" + password, {method: 'POST', mode: "cors"})
+        httpClient.post(APIBase + "/auth_admin/" + username + "/" + password,{mode: "cors"})
+            .then( res => {
+                console.log(res);
+                userHasAuthenticated(true);
+            });
+        /*httpClient.get(APIBase + "/cookie")
+            .then(res => {
+                console.log(res);
+            });
+        httpClient.get(APIBase + "/cookie")
+            .then(res => {
+                console.log(res);
+            });*/
+        /*fetch(APIBase + "/auth_admin/" + username + "/" + password, {method: 'POST', mode: "cors"})
             .then(res => res.json())
             .then(data => {
                 //console.log(data);
                 if (data.result === true){
                     //console.log("auth is true");
                     userHasAuthenticated(true);
+                    fetch(APIBase + "/cookie", {method: 'GET', mode: "cors"})
+                        .then(res => res.json())
+                        .then(data => {
+                            alert("status????")
+                        });
+                    fetch(APIBase + "/cookie", {method: 'GET', mode: "cors"})
+                        .then(res => res.json())
+                        .then(data => {
+                            alert("status????")
+                        });
                 }
                 else{
                     alert("User and/or password is not correct");
                 }
-            });
+            });*/
     }
 
     return(

@@ -48,3 +48,10 @@ h1,h2,h3,h4,h5,h6,label,span {
   box-shadow: none;
 }
 
+.navbar{
+  background-color: #c8f1ff;
+  display: flex;
+  flex-direction: row;
+  justify-self: auto;
+}
+

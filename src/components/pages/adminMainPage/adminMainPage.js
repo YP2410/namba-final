@@ -28,7 +28,7 @@ export const AdminMainPage = () => {
     }
 
     return(
-        <>
+        <header className="App-header">
             <div className={"adminMainPage"}>
                 <h1>Admin MAIN page</h1>
                 <Button className="custom-btn" onClick={routeChangeToPollCreation} > Create a new poll </Button>
@@ -39,7 +39,7 @@ export const AdminMainPage = () => {
                 <br></br>
                 <Button className="custom-btn" onClick={routeChangeToUsersPage} > See users </Button>
             </div>
-        </>
+        </header>
     )
 }
 

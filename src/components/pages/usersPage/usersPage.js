@@ -68,13 +68,13 @@ export const UsersPage = () => {
     */
 
     return(
-        <>
+        <header className="App-header">
             <AppContext.Provider value={{userData, setUserData}}>
                 <AllUsersTable/>
                 {userData == null ?  (<></>)
                     : (<AllVotesTable />)}
 
             </AppContext.Provider>
-        </>
+        </header>
     )
 }

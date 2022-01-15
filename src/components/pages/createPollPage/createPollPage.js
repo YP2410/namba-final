@@ -124,6 +124,7 @@ const CreatePollPage = () => {
     }
 
     return(
+        <header className="App-header">
         <div className={"createPollPage"}>
             <h1>Create Poll Page</h1>
             <Form onSubmit={handleSubmit}>
@@ -171,6 +172,7 @@ const CreatePollPage = () => {
                 </div>
             </Form>
         </div>
+            </header>
     )
 }
 

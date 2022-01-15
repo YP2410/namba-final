@@ -8,19 +8,29 @@ import NotFound from "./components/pages/notFoundPage/notFoundPage";
 import AddAdminPage from "./components/pages/addAdminPage/addAdminPage";
 import {PollsResultsPage} from "./components/pages/pollsResultsPage/pollsResultsPage";
 import {UsersPage} from "./components/pages/usersPage/usersPage";
+import UnauthorizedPage from "./components/pages/unauthorizedPage/unauthorizedPage";
 
 export default function RoutesInApp() {
     const {isAuthenticated} = useAppContext();
-  return (
-    <Routes>
-        {isAuthenticated ? (<Route exact path="/" element={<AdminMainPage/>}/>)
-            : (<Route exact path="/" element={<AdminSignInPage/>}/>)}
-        <Route exact path="/main" element={<AdminMainPage/>}/>
-        <Route exact path="/createPoll" element={<CreatePollPage/>}/>
-        <Route exact path="/pollsResults" element={<PollsResultsPage/>}/>
-        <Route exact path="/usersPage" element={<UsersPage/>}/>
-        <Route exact path="/addAdmin" element={<AddAdminPage/>}/>
-        <Route path="*" element={<NotFound/>}/>
-    </Routes>
+    const {isAuthenticating} = useAppContext();
+  return (<>
+          {isAuthenticating ? (<h1> Loading</h1>)
+              : (
+                  <Routes>
+                      {isAuthenticated ? (<Route exact path="/" element={<AdminMainPage/>}/>)
+                          : (<Route exact path="/" element={<AdminSignInPage/>}/>)}
+                      {isAuthenticated ? (<Route exact path="/main" element={<AdminMainPage/>}/>)
+                          : (<Route exact path="/main" element={<UnauthorizedPage/>}/>)}
+                      {isAuthenticated ? (<Route exact path="/createPoll" element={<CreatePollPage/>}/>)
+                          : (<Route exact path="/createPoll" element={<UnauthorizedPage/>}/>)}
+                      {isAuthenticated ? (<Route exact path="/pollsResults" element={<PollsResultsPage/>}/>)
+                          : (<Route exact path="/pollsResults" element={<UnauthorizedPage/>}/>)}
+                      {isAuthenticated ? (<Route exact path="/usersPage" element={<UsersPage/>}/>)
+                          : (<Route exact path="/usersPage" element={<UnauthorizedPage/>}/>)}
+                      {isAuthenticated ? (<Route exact path="/addAdmin" element={<AddAdminPage/>}/>)
+                          : (<Route exact path="/addAdmin" element={<UnauthorizedPage/>}/>)}
+                      <Route path="*" element={<NotFound/>}/>
+                  </Routes>)}
+      </>
   );
 }

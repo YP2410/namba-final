@@ -33,6 +33,7 @@ const AddAdminPage = () => {
     }
 
 return(
+    <header className="App-header">
     <div className="AddAdminForm">
         <h1> Add a new admin</h1>
         <Form onSubmit={handleSubmit}>
@@ -53,6 +54,7 @@ return(
             </div>
         </Form>
     </div>
+        </header>
     );
 
 

@@ -52,6 +52,28 @@ input[type=file] {
   align-self: center;
 }
 
+.logout-btn:hover {
+  background-color: #ffd51c !important;
+  font-size: 16px !important;
+  border: #fff !important;
+  color: #000000 !important;
+  width: 100px;
+  margin: 5px;
+  align-self: end;
+  justify-self: flex-end;
+}
+
+.logout-btn:disabled, .logout-btn {
+  background-color: white !important;
+  font-size: 16px !important;
+  border: #fff !important;
+  color: #000000 !important;
+  width: 100px;
+  margin: 5px;
+  align-self: end;
+  justify-self: flex-end;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
