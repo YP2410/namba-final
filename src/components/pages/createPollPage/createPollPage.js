@@ -62,7 +62,7 @@ const CreatePollPage = () => {
   function sendToWho(sendies) {
         setToWho(sendies);
         if (sendies === "all"){
-            alert("all");
+
         }
         else{
             setPollData(null);
@@ -90,6 +90,9 @@ const CreatePollPage = () => {
                     if (data.result === true) {
                         alert("submitted successfully")
                     }
+                    if (data.result === "empty") {
+                        alert("No users in the system")
+                    }
                 })
                 .catch(e => {
                     console.log(e);
@@ -113,6 +116,9 @@ const CreatePollPage = () => {
                     //console.log(data);
                     if (data.result === true) {
                         alert("submitted successfully")
+                    }
+                    if (data.result === "empty") {
+                        alert("No such users in the system")
                     }
                 })
                 .catch(e => {
