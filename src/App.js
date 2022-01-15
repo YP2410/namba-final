@@ -7,6 +7,7 @@ import RoutesInApp from "./RoutesInApp";
 import httpClient from "./httpClient";
 import {APIBase} from "./constAttributes";
 import { useNavigate } from "react-router-dom";
+import {Helmet} from "react-helmet";
 
 
 /*          not sure if to add yet, need to think if necessary and looks good...
@@ -62,6 +63,9 @@ function App() {
 
     return (
         <div className="App">
+            <Helmet>
+                <title>Namba-Project</title>
+            </Helmet>
             <header className="App-header">
                 {pathname === "/" ? (<></>)
                 : (<Button className="logout-btn" onClick={ () => logOut()}>
