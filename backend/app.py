@@ -1,6 +1,8 @@
+from datetime import timedelta
 from flask import Flask, render_template, request, send_from_directory, jsonify, session
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
+from flask_sessionstore import SqlAlchemySessionInterface
 from sqlalchemy import ForeignKey
 from flask_cors import CORS, cross_origin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -9,6 +11,7 @@ from sqlalchemy.ext.mutable import Mutable
 from sqlalchemy.dialects.postgresql import ARRAY
 import backend.telegram_bot
 from backend.config import ApplicationConfig
+import pickle
 
 app = Flask(__name__)
 app.config.from_object(ApplicationConfig)
@@ -21,8 +24,8 @@ server_session.init_app(app)
 db = SQLAlchemy(app)
 app.config['SESSION_SQLALCHEMY'] = db
 server_session.app.session_interface.db.create_all()
-
-
+#SqlAlchemySessionInterface(app, db, "sessions", "sess_")
+app.permanent_session_lifetime = timedelta(minutes=5)
 
 class Student(db.Model):
     __tablename__ = 'users'
@@ -127,18 +130,26 @@ class Polls_answers(db.Model):
         self.answers = answers
         self.is_correct = is_correct
 
-class Sessions(db.Model):
-    __tablename__ = 'sessions'
-    id = db.Column(db.Integer, primary_key=True)
-    session_id = db.Column(db.String(20))
-    data = db.Column(db.String(50))
-    expiry = db.Column(db.Date)
 
-    def __init__(self, id, session_id, data, expiry):
-        self.id = id
-        self.session_id = session_id
-        self.data = data
-        self.expiry = expiry
+
+class Session(db.Model):
+        __tablename__ = "sessions"
+
+        id = db.Column(db.Integer, primary_key=True)
+        session_id = db.Column(db.String(255), unique=True)
+        data = db.Column(db.LargeBinary)
+        expiry = db.Column(db.DateTime)
+
+        def __init__(self, session_id, data, expiry):
+            self.session_id = session_id
+            self.data = data
+            self.expiry = expiry
+
+        def __repr__(self):
+            return '<Session data %s>' % self.data
+
+
+sql_session_model = Session
 
 '''@login_manager.user_loader
 def load_user(username):
@@ -360,7 +371,13 @@ def get_current_user():
 
 @app.route("/logout", methods=['GET', 'POST'])
 def logout_user():
-    del session[1]
+    try:
+
+        Session.query.filter_by(id=sql_session_model.id).delete()
+        db.session.commit()
+    except Exception as e:
+        db.session.remove()
+        raise e
     return {"result": True}
 
 
