@@ -13,11 +13,12 @@ import UnauthorizedPage from "./components/pages/unauthorizedPage/unauthorizedPa
 export default function RoutesInApp() {
     const {isAuthenticated} = useAppContext();
     const {isAuthenticating} = useAppContext();
+    const pathname = window.location.pathname;
   return (<>
           {isAuthenticating ? (<h1> Loading</h1>)
               : (
                   <Routes>
-                      {isAuthenticated ? (<Route exact path="/" element={<AdminMainPage/>}/>)
+                      {isAuthenticated && (pathname === "/" || pathname === "" ) ? (<Route exact path="/" element={<AdminMainPage/>}/>)
                           : (<Route exact path="/" element={<AdminSignInPage/>}/>)}
                       {isAuthenticated ? (<Route exact path="/main" element={<AdminMainPage/>}/>)
                           : (<Route exact path="/main" element={<UnauthorizedPage/>}/>)}

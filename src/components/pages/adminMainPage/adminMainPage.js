@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
@@ -6,6 +6,13 @@ import { useNavigate } from "react-router-dom";
 export const AdminMainPage = () => {
 
     const navigate = useNavigate();
+    const pathname = window.location.pathname;
+
+    useEffect(() => {
+        if (pathname === "/"){
+            navigate("/main");
+        }
+    },[] )
 
     const routeChangeToPollCreation = () =>{
     let path = `/createPoll`;

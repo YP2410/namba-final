@@ -1,6 +1,6 @@
 import './App.css';
 import Button from "react-bootstrap/Button";
-import './index.css'
+import './index.css';
 import React, {useEffect, useState} from "react";
 import { AppContext } from "./lib/contextLib";
 import RoutesInApp from "./RoutesInApp";
