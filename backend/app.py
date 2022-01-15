@@ -209,7 +209,7 @@ def add_admin(username, password):
 @app.route('/delete_admin', methods=['POST'])
 def delete_admin(username):
     try:
-        Admins.query.filter_by(Username=username).delete()
+        Admins.query.filter_by(id=username).delete()
         db.session.commit()
     except Exception as e:
         db.session.remove()
@@ -235,6 +235,9 @@ def send_poll_to_all(question, answers, multiple_choice):
         answers = [a for a in answers if len(a) > 0]
         # in the future will need to send to the poll function a list of chat_id's
         Result = db.session.query(Student).all()
+        if Result == []:
+            print("empty")
+            return {"result": "empty"}
         chat_ID = []
         for user in Result:
             chat_ID.append(user.user_ID)
@@ -263,6 +266,8 @@ def send_to_specific_voters(poll_id, answer, question, answers, multiple_choice)
         print(chat_ID)
         if chat_ID:
             backend.telegram_bot.poll(chat_ID, question, answers, multiple_choice)
+        else:
+            return {"result": "empty"}
     except Exception as e:
         db.session.remove()
         raise e
@@ -457,5 +462,8 @@ if __name__ == '__main__':  # python interpreter assigns "__main__" to the file 
     # init_poll([5045706840], "asdas?", "fdsf , dfdf, 1, 2", True)
     # send_poll_to_all("pika", "yes , no", False)
     # send_to_specific_voters("5976421871120285710", "1", "Youuuu", "yes , no", False)
-    # add_admin(username="daniel", password="12321")
+    #add_admin(username="daniel", password="pikapika")
+    #add_admin("daniel", "pikapika")
+    #delete("5045706840")
+    #delete("1756044528")
     app.run(debug=True)
