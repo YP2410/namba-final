@@ -2,9 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="454ce11f-7401-48b3-b881-14c43c598272" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/run_project.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/namba-final-project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/namba-final-project.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/telegram_bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/telegram_bot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run_project.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_project.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/addAdminPage/addAdminPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/addAdminPage/addAdminPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/adminSignInPage/adminSignInForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/adminSignInPage/adminSignInForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/createPollPage/allPollsTable2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/createPollPage/allPollsTable2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/createPollPage/createPollPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/createPollPage/createPollPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/pollsResultsPage/allPollsTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/pollsResultsPage/allPollsTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/usersPage/allUsersTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/usersPage/allUsersTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/usersPage/allVotesTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/usersPage/allVotesTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constAttributes.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +132,7 @@
       <recent name="C:\technion\semester_7\Namba\Final_Project\templates" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.npm start">
+  <component name="RunManager" selected="Python.run_project">
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
@@ -237,7 +251,7 @@
       <workItem from="1641766498603" duration="23427000" />
       <workItem from="1642179900270" duration="22386000" />
       <workItem from="1642336427379" duration="7092000" />
-      <workItem from="1642361481819" duration="1136000" />
+      <workItem from="1642361481819" duration="1881000" />
     </task>
     <task id="LOCAL-00001" summary="flask is integrated with postgresql">
       <created>1640695155934</created>
@@ -435,7 +449,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642289805088</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="run_project without npm start yet">
+      <created>1642362924253</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1642362924253</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -483,7 +504,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="sql code (without table/s for polls)" />
     <MESSAGE value="sql is fun!! Arad is stupid" />
     <MESSAGE value="handling multiple register error&#10;there is no need for multiple delete handling (there is no error there...)" />
     <MESSAGE value="updated sql_database" />
@@ -508,7 +528,8 @@
     <MESSAGE value="added header filter for some columns" />
     <MESSAGE value="handled no users in the system situations" />
     <MESSAGE value="midwork on sessions with sqlalchemy" />
-    <option name="LAST_COMMIT_MESSAGE" value="midwork on sessions with sqlalchemy" />
+    <MESSAGE value="run_project without npm start yet" />
+    <option name="LAST_COMMIT_MESSAGE" value="run_project without npm start yet" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Final_Project$app.coverage" NAME="app Coverage Results" MODIFIED="1640790330902" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -516,7 +537,7 @@
     <SUITE FILE_PATH="coverage/namba_final_project$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1642339851823" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Final_Project$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1640790342366" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/namba_final_project$app.coverage" NAME="app Coverage Results" MODIFIED="1642339849814" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />
-    <SUITE FILE_PATH="coverage/namba_final_project$run_project.coverage" NAME="run_project Coverage Results" MODIFIED="1642362291514" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/namba_final_project$run_project.coverage" NAME="run_project Coverage Results" MODIFIED="1642363322430" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/App.js">

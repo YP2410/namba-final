@@ -207,6 +207,7 @@ def add_mapping(poll_ID, fake_ID):
 @app.route('/delete', methods=['POST'])
 def delete(id):
     try:
+        Polls_answers.query.filter_by(user_ID=id).delete()
         Student.query.filter_by(user_ID=id).delete()
         db.session.commit()
     except Exception as e:
