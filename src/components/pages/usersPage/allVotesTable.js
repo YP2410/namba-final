@@ -5,6 +5,7 @@ import {APIBase} from "../../../constAttributes";
 import Tabulator from "tabulator-tables";
 import {useAppContext} from "../../../lib/contextLib";
 import {UsersPage} from "./usersPage";
+import httpClient from "../../../httpClient";
 
 
 
@@ -32,7 +33,25 @@ export const AllVotesTable = () => {
 
 
     function getData() {
-        fetch(APIBase + "/specific_user_answers/" + userData.user_ID,{method: 'GET', mode: "cors"})
+        httpClient.get(APIBase + "/specific_user_answers/" + userData.user_ID)
+            .then(res => {
+                //console.log(res["data"]);
+                let count = Object.keys(res["data"]).length;
+                let lst = [];
+                for (let i = 0; i < count; i++){
+                    lst.push(res["data"][i]);
+                }
+                // console.log(lst);
+                setData(lst);
+                //console.log(data)
+            })
+            .catch( (e) => {
+                alert("error has occurred");
+                //console.log(e);
+            });
+
+
+        /*fetch(APIBase + "/specific_user_answers/" + userData.user_ID,{method: 'GET', mode: "cors"})
             .then(res => res.json())
             .then(data => {
                 //console.log("reload");
@@ -50,7 +69,7 @@ export const AllVotesTable = () => {
             .catch( (e) => {
                 alert("error has occurred");
                 //console.log(e);
-            })
+            })*/
     }
 
     function rowClicked(e, row){

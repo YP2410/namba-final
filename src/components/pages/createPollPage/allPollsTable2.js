@@ -3,6 +3,7 @@ import {reactFormatter, ReactTabulator} from 'react-tabulator';
 import "tabulator-tables/dist/css/tabulator.min.css";
 import {APIBase} from "../../../constAttributes";
 import {useAppContext} from "../../../lib/contextLib";
+import httpClient from "../../../httpClient";
 
 
 
@@ -48,7 +49,24 @@ export const AllPollsTable2 = () => {
 
 
     function getData() {
-        fetch(APIBase + "/all_polls_data",{method: 'GET', mode: "cors"})
+        httpClient.get(APIBase + "/all_polls_data")
+            .then(res => {
+                console.log(res["data"]);
+                let count = Object.keys(res["data"]).length;
+                let lst = [];
+                for (let i = 0; i < count; i++){
+                    lst.push(res["data"][i]);
+                }
+                // console.log(lst);
+                setData(lst);
+                //console.log(data)
+            })
+            .catch( (e) => {
+                alert("error has occurred");
+                //console.log(e);
+            });
+
+        /*fetch(APIBase + "/all_polls_data",{method: 'GET', mode: "cors"})
             .then(res => res.json())
             .then(data => {
                 //console.log("reload");
@@ -66,7 +84,7 @@ export const AllPollsTable2 = () => {
             .catch( (e) => {
                 alert("error has occurred");
                 //console.log(e);
-            })
+            })*/
     }
 
     function rowClicked(e, row){

@@ -5,6 +5,7 @@ import "./createPollPage.css"
 import {APIBase} from "../../../constAttributes";
 import {AppContext, useAppContext} from "../../../lib/contextLib";
 import {AllPollsTable2} from "./allPollsTable2";
+import httpClient from "../../../httpClient";
 
 
 const AnswersToChooseFrom = (pollData) =>{
@@ -80,7 +81,20 @@ const CreatePollPage = () => {
         //alert(multiple);
         //let data = {'question': question, 'answers': answers};
         if (toWho === "all") {
-            fetch(APIBase + "/send_poll_to_all/" + question2 + "/" + answers + "/" + multiple, {
+            httpClient.post(APIBase + "/send_poll_to_all/" + question2 + "/" + answers + "/" + multiple)
+                .then(res => {
+                    if (res["data"].result === true) {
+                        alert("submitted successfully")
+                    }
+                    if (res["data"].result === "empty") {
+                        alert("No users in the system")
+                    }
+                })
+                .catch(e => {
+                    console.log(e);
+                    alert("error has occurred");
+                });
+            /*fetch(APIBase + "/send_poll_to_all/" + question2 + "/" + answers + "/" + multiple, {
                 method: 'POST',
                 mode: "cors",
             })
@@ -97,7 +111,7 @@ const CreatePollPage = () => {
                 .catch(e => {
                     console.log(e);
                     alert("error has occurred");
-                });
+                });*/
         }
         else {
             let poll_id = pollData.poll_ID;
@@ -105,7 +119,24 @@ const CreatePollPage = () => {
             console.log(poll_id);
             console.log(valueKey);
             console.log(answers);
-            fetch(APIBase + "/send_to_specific_voters/" + poll_id + "/" + valueKey
+            httpClient.post(APIBase + "/send_to_specific_voters/" + poll_id + "/" + valueKey
+                + "/" + question + "/" + answers
+                + "/" + multiple)
+                .then(res => {
+                    if (res["data"].result === true) {
+                        alert("submitted successfully")
+                    }
+                    if (res["data"].result === "empty") {
+                        alert("No such users in the system")
+                    }
+                })
+            .catch(e => {
+                    console.log(e);
+                    alert("error has occurred");
+                });
+
+
+            /*fetch(APIBase + "/send_to_specific_voters/" + poll_id + "/" + valueKey
                 + "/" + question + "/" + answers
                 + "/" + multiple, {
                 method: 'POST',
@@ -124,7 +155,7 @@ const CreatePollPage = () => {
                 .catch(e => {
                     console.log(e);
                     alert("error has occurred");
-                });
+                });*/
         }
 
     }
