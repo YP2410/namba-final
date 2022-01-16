@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {APIBase} from "../../../constAttributes";
+import {APIBase} from "../../../config";
 import {useAppContext} from "../../../lib/contextLib";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";

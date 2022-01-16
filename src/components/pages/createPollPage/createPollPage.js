@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./createPollPage.css"
-import {APIBase} from "../../../constAttributes";
+import {APIBase} from "../../../config";
 import {AppContext, useAppContext} from "../../../lib/contextLib";
 import {AllPollsTable2} from "./allPollsTable2";
 import httpClient from "../../../httpClient";

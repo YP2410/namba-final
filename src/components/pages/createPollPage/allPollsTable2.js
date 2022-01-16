@@ -1,7 +1,7 @@
 import React,{ useState, useEffect }from "react"
 import {reactFormatter, ReactTabulator} from 'react-tabulator';
 import "tabulator-tables/dist/css/tabulator.min.css";
-import {APIBase} from "../../../constAttributes";
+import {APIBase} from "../../../config";
 import {useAppContext} from "../../../lib/contextLib";
 import httpClient from "../../../httpClient";
 
