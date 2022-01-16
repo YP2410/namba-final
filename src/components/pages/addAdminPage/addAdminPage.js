@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import {APIBase} from "../../../constAttributes";
+import httpClient from "../../../httpClient";
 
 const AddAdminPage = () => {
     const [username, setUsername] = useState("");
@@ -13,7 +14,21 @@ const AddAdminPage = () => {
 
     function handleSubmit(event) {
         event.preventDefault();
-        fetch(APIBase + "/add_admin/" + username + "/" + password, {method: 'POST', mode: "cors"})
+        httpClient.post(APIBase + "/add_admin/" + username + "/" + password)
+            .then(res => {
+                if (res["data"].result === true){
+                    //console.log("auth is true");
+                    alert("Admin added!!")
+                }
+                else{
+                    alert("Can't add admin\n" + res["data"].result);
+                }
+            }).catch(e => {
+            console.log(e);
+            alert("An error occurred");
+        });
+
+        /*fetch(APIBase + "/add_admin/" + username + "/" + password, {method: 'POST', mode: "cors"})
             .then(res => res.json())
             .then(data => {
                 //console.log(data);
@@ -28,7 +43,7 @@ const AddAdminPage = () => {
             .catch(e => {
                 console.log(e);
                 alert("An error occurred");
-            });
+            });*/
 
     }
 
