@@ -1,8 +1,8 @@
 import threading
-
 import backend.telegram_bot
 import backend.app
 import subprocess
+from backend.app import db, add_admin
 from config import HOST_PORT
 
 class FlaskThread(threading.Thread):
@@ -22,6 +22,11 @@ class ReactThread(threading.Thread):
 
 if __name__ == '__main__':
     print("start...")
+    # create all tables
+    db.create_all()
+
+    # create initial admin
+    add_admin(username="admin", password="236369")
     flask_thread = FlaskThread()
     flask_thread.start()
     # telegram_bot_thread = TelegramBotThread()

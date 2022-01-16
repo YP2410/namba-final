@@ -18,15 +18,18 @@ export const AllVotesTable = () => {
         {
             title: "poll_ID",
             field: "poll_ID",
+            width: 200,
         },
         {
             title: "question",
             field: "question",
+            width: 350,
         },
         {
             title: "answers",
             field: "answers",
             headerSort:false,
+            width: 350,
         },
     ]
 

@@ -16,7 +16,8 @@ export const AllPollsTable = () => {
         {
             title: "poll_ID",
             field: "poll_ID",
-            headerFilter: true
+            headerFilter: true,
+            width: 175
         },
         {
             title: "question",

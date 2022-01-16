@@ -6,9 +6,8 @@ class ApplicationConfig:
     SESSION_TYPE = "sqlalchemy"
 
 
+HOST_PORT = 4000  # port for flask
 
-HOST_PORT = 4000
-
-BOT_KEY = "5029169709:AAHvskSVaIUTmMDeJW-6XBoOzi-IC4naEjA"
+BOT_KEY = "5029169709:AAHvskSVaIUTmMDeJW-6XBoOzi-IC4naEjA"  # key for telegram bot
 
 

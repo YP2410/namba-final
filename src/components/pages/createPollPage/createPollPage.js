@@ -120,7 +120,7 @@ const CreatePollPage = () => {
             console.log(valueKey);
             console.log(answers);
             httpClient.post(APIBase + "/send_to_specific_voters/" + poll_id + "/" + valueKey
-                + "/" + question + "/" + answers
+                + "/" + question2 + "/" + answers
                 + "/" + multiple)
                 .then(res => {
                     if (res["data"].result === true) {
