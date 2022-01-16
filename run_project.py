@@ -17,7 +17,6 @@ class TelegramBotThread(threading.Thread):
 
 class ReactThread(threading.Thread):
     def run(self) -> None:
-        # subprocess.check_call('npm start --scripts-prepend-node-path=auto')
         subprocess.check_call('npm start --scripts-prepend-node-path=auto', shell=True)
 
 
@@ -27,9 +26,9 @@ if __name__ == '__main__':
     flask_thread.start()
     # telegram_bot_thread = TelegramBotThread()
     # telegram_bot_thread.start()
-    # subprocess.check_call('npm start')
     react_thread = ReactThread()
     react_thread.start()
+    backend.telegram_bot.main()
 
 
 
