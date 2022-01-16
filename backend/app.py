@@ -343,13 +343,14 @@ def delete_poll(poll_id):
         raise e
 
 
-@app.route('/auth_admin/<username>/<password>', methods=['GET', 'POST'])
+@app.route('/auth_admin/<username>/<password>', methods=['POST'])
 def auth_admin(username, password):
     try:
         Result = db.session.query(Admins).filter(Admins.id == username)
         hashed_password = Result[0].Password
     except Exception as e:
         print("Exception is " + str(e))
+        session.clear()
         return {"result": False}
     flag = check_password_hash(hashed_password, password)
     if flag:
@@ -357,8 +358,9 @@ def auth_admin(username, password):
         session["user_id"] = (Result[0].id + Result[0].Password)
         # user_id = session.get("user_id")
         # print(user_id)
-        return jsonify({"result": True})
+        return {"result": True}
     else:
+        session.clear()
         return {"result": False}
 
 
