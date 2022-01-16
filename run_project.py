@@ -1,4 +1,37 @@
-import os
+import threading
+
+import backend.telegram_bot
+import backend.app
+import subprocess
+from config import HOST_PORT
+
+class FlaskThread(threading.Thread):
+    def run(self) -> None:
+        backend.app.app.run(port=HOST_PORT)
+
+
+class TelegramBotThread(threading.Thread):
+    def run(self) -> None:
+        backend.telegram_bot.main()
+
+
+class ReactThread(threading.Thread):
+    def run(self) -> None:
+        subprocess.check_call('npm start --scripts-prepend-node-path=auto')
+
+
+if __name__ == '__main__':
+    print("start...")
+    flask_thread = FlaskThread()
+    flask_thread.start()
+    # telegram_bot_thread = TelegramBotThread()
+    # telegram_bot_thread.start()
+    # subprocess.check_call('npm start')
+
+
+
+
+'''import os
 from backend.app import db, add_admin
 import subprocess
 from multiprocessing import Process, Pool
@@ -33,10 +66,10 @@ if __name__ == '__main__':
     process_pool = Pool(processes=2)
     process_pool.map(execute, all_processes)
 
-    '''p1 = Process(target=run_backend(), args=())
+    p1 = Process(target=run_backend(), args=())
     p2 = Process(target=run_telegram_bot(), args=())
     p3 = Process(target=run_npm(), args=())
-    
+
     p1.start()
     p2.start()
     p3.start()
