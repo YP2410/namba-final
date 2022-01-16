@@ -25,6 +25,7 @@ from telegram.ext import Updater, CommandHandler,PollAnswerHandler, PollHandler,
 # Enable logging
 # from app import submit, delete, add_poll, add_admin, delete_admin, delete_poll, add_answer
 import backend.app
+from config import BOT_KEY
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
@@ -40,7 +41,7 @@ logger = logging.getLogger(__name__)
 def poll(chat_id, question, answers, multiple_choice) -> None:
     """Sends a predefined poll"""
 
-    message = Bot("5029169709:AAHvskSVaIUTmMDeJW-6XBoOzi-IC4naEjA").send_poll(
+    message = Bot(BOT_KEY).send_poll(
         chat_id[0],
         question,
         answers,
@@ -57,7 +58,7 @@ def poll(chat_id, question, answers, multiple_choice) -> None:
     backend.app.add_mapping(real_ID, real_ID)
     if len(chat_id)>1:
         for i in range(1, len(chat_id)):
-            message = Bot("5029169709:AAHvskSVaIUTmMDeJW-6XBoOzi-IC4naEjA").send_poll(
+            message = Bot(BOT_KEY).send_poll(
                 chat_id[i],
                 question,
                 answers,
@@ -162,7 +163,7 @@ def echo(update: Update, context: CallbackContext) -> None:
 def main() -> None:
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
-    updater = Updater("5029169709:AAHvskSVaIUTmMDeJW-6XBoOzi-IC4naEjA")
+    updater = Updater(BOT_KEY)
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher

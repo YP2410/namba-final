@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import {APIBase} from "../../../constAttributes";
+import {APIBase} from "../../../config";
 import httpClient from "../../../httpClient";
 
 const AddAdminPage = () => {

@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import { AppContext } from "./lib/contextLib";
 import RoutesInApp from "./RoutesInApp";
 import httpClient from "./httpClient";
-import {APIBase} from "./constAttributes";
+import {APIBase} from "./config";
 import { useNavigate } from "react-router-dom";
 import {Helmet} from "react-helmet";
 

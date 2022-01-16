@@ -1,17 +1,15 @@
-from datetime import timedelta
-from flask import Flask, render_template, request, send_from_directory, jsonify, session
+from flask import Flask, render_template, session
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 # from flask_sessionstore import SqlAlchemySessionInterface
 from sqlalchemy import ForeignKey
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlalchemy.exc
 from sqlalchemy.ext.mutable import Mutable
 from sqlalchemy.dialects.postgresql import ARRAY
 import backend.telegram_bot
-from backend.config import ApplicationConfig
-import pickle
+from config import ApplicationConfig, HOST_PORT
 
 app = Flask(__name__)
 app.config.from_object(ApplicationConfig)
@@ -505,4 +503,4 @@ if __name__ == '__main__':  # python interpreter assigns "__main__" to the file 
     #add_admin("daniel", "pikapika")
     #delete("5045706840")
     #delete("1756044528")
-    app.run(debug=True)
+    app.run(debug=True, port=HOST_PORT)
