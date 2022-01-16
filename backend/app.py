@@ -2,7 +2,7 @@ from datetime import timedelta
 from flask import Flask, render_template, request, send_from_directory, jsonify, session
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
-from flask_sessionstore import SqlAlchemySessionInterface
+# from flask_sessionstore import SqlAlchemySessionInterface
 from sqlalchemy import ForeignKey
 from flask_cors import CORS, cross_origin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -20,12 +20,12 @@ CORS(app, supports_credentials=True)
 # app.config['SESSION_TYPE'] = 'memcached'
 # app.config['SECRET_KEY'] = 'TheFlyingDutchman\n\xec]/'
 server_session = Session(app)
-server_session.init_app(app)
+# server_session.init_app(app)
 db = SQLAlchemy(app)
 app.config['SESSION_SQLALCHEMY'] = db
 server_session.app.session_interface.db.create_all()
-#SqlAlchemySessionInterface(app, db, "sessions", "sess_")
-app.permanent_session_lifetime = timedelta(minutes=5)
+# SqlAlchemySessionInterface(app, db, "sessions", "sess_")
+# app.permanent_session_lifetime = timedelta(minutes=5)
 
 class Student(db.Model):
     __tablename__ = 'users'
@@ -132,7 +132,7 @@ class Polls_answers(db.Model):
 
 
 
-class Session(db.Model):
+'''class Session(db.Model):
         __tablename__ = "sessions"
 
         id = db.Column(db.Integer, primary_key=True)
@@ -149,7 +149,7 @@ class Session(db.Model):
             return '<Session data %s>' % self.data
 
 
-sql_session_model = Session
+sql_session_model = Session'''
 
 '''@login_manager.user_loader
 def load_user(username):
@@ -365,6 +365,9 @@ def auth_admin(username, password):
 @app.route("/cookie", methods=['GET', 'POST'])
 def get_current_user():
     user_id = session.get("user_id")
+    print(user_id)
+    if not user_id:
+        session.clear()
     # print(user_id)
     return {"result": user_id}
 
@@ -372,9 +375,11 @@ def get_current_user():
 @app.route("/logout", methods=['GET', 'POST'])
 def logout_user():
     try:
-
-        Session.query.filter_by(id=sql_session_model.id).delete()
-        db.session.commit()
+        '''Session.query.filter_by(id=sql_session_model.id).delete()
+        db.session.commit()'''
+        # session["user_id"] = None
+        session.clear()
+        # session.pop("user_id")
     except Exception as e:
         db.session.remove()
         raise e

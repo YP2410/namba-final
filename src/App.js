@@ -67,7 +67,7 @@ function App() {
                 <title>Namba-Project</title>
             </Helmet>
             <header className="App-header">
-                {pathname === "/" ? (<></>)
+                {(pathname === "/" || isAuthenticated === false) ? (<></>)
                 : (<Button className="logout-btn" onClick={ () => logOut()}>
                     LOGOUT
                 </Button>)}
